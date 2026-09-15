@@ -1,0 +1,8 @@
+__pycache__/
+*.egg-info/
+build/
+
+# Raw benchmark output: generated docs, diffs and session transcripts. It adds up to megabytes per run.
+# Each run's config.json, report.md and summary.json, and results/comparison.md, are committed.
+results/*/runs/
+results/*/judge/
