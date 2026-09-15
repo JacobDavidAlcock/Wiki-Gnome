@@ -6,11 +6,11 @@ import stat
 import subprocess
 from pathlib import Path
 
-from . import FIXTURES_DIR
-from .tasks import Condition, Task
+from .conditions import Condition
+from .model import Project, Task
 
 IGNORED_NAMES = {"__pycache__", "build", ".pytest_cache"}
-GIT_EXCLUDES = ".claude/\n__pycache__/\n*.egg-info/\nbuild/\npantry.json\npantry.json.tmp\n"
+GIT_EXCLUDES = [".claude/", "__pycache__/", "*.egg-info/", "build/"]
 
 
 def remove_tree(path: Path) -> None:
@@ -24,7 +24,7 @@ def remove_tree(path: Path) -> None:
 
 
 def copy_tree_lf(src: Path, dst: Path) -> None:
-    """Copy a fixture with LF line endings, so diffs don't depend on the host's git settings."""
+    """Copy a folder with LF line endings, so diffs don't depend on the host's git settings."""
     for path in src.rglob("*"):
         rel = path.relative_to(src)
         if any(part in IGNORED_NAMES or part.endswith(".egg-info") for part in rel.parts):
@@ -44,7 +44,7 @@ def _is_text(path: Path) -> bool:
 
 def git(cwd: Path, *args: str) -> str:
     proc = subprocess.run(
-        ["git", "-c", "user.name=Pantry Maintainer", "-c", "user.email=maintainer@example.com", *args],
+        ["git", "-c", "user.name=Project Maintainer", "-c", "user.email=maintainer@example.com", *args],
         cwd=cwd, capture_output=True, text=True, encoding="utf-8", errors="replace",
     )
     if proc.returncode != 0:
@@ -58,33 +58,28 @@ def _clear_except_git(path: Path) -> None:
             remove_tree(child) if child.is_dir() else child.unlink()
 
 
-def create_workspace(path: Path, task: Task, condition: Condition) -> None:
+def create_workspace(path: Path, project: Project, task: Task, condition: Condition) -> None:
     remove_tree(path)
     path.mkdir(parents=True)
     git(path, "init", "-q", "-b", "main")
     git(path, "config", "core.autocrlf", "false")
     (path / ".git" / "info").mkdir(parents=True, exist_ok=True)
-    (path / ".git" / "info" / "exclude").write_text(GIT_EXCLUDES, encoding="utf-8")
+    excludes = GIT_EXCLUDES + list(project.workspace_ignores)
+    (path / ".git" / "info" / "exclude").write_text("\n".join(excludes) + "\n", encoding="utf-8")
 
-    if task.id == "changelog":
-        copy_tree_lf(FIXTURES_DIR / "pantry-0.1.0", path)
+    if task.setup == "changelog":
+        copy_tree_lf(project.previous, path)
         git(path, "add", "-A")
-        git(path, "commit", "-q", "-m", "Release 0.1.0")
-        git(path, "tag", "v0.1.0")
+        git(path, "commit", "-q", "-m", f"Release {project.previous_tag.lstrip('v')}")
+        git(path, "tag", project.previous_tag)
         _clear_except_git(path)
-        copy_tree_lf(FIXTURES_DIR / "pantry", path)
-        git(path, "add", "-A")
-        git(path, "commit", "-q", "-m", "Prepare 0.2.0")
-    else:
-        copy_tree_lf(FIXTURES_DIR / "pantry", path)
-        if task.id == "rewrite":
-            docs = path / "docs"
-            docs.mkdir()
-            docs.joinpath("usage.md").write_bytes(
-                (FIXTURES_DIR / "pantry-bad-usage.md").read_bytes().replace(b"\r\n", b"\n")
-            )
-        git(path, "add", "-A")
-        git(path, "commit", "-q", "-m", "Initial commit")
+    copy_tree_lf(project.current, path)
+    if task.setup == "rewrite":
+        target = path / task.doc_path
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes(project.bad_doc.read_bytes().replace(b"\r\n", b"\n"))
+    git(path, "add", "-A")
+    git(path, "commit", "-q", "-m", "Prepare the next release" if task.setup == "changelog" else "Initial commit")
 
     if condition.skill_dir:
         copy_tree_lf(condition.skill_dir, path / ".claude" / "skills" / condition.skill_dir.name)

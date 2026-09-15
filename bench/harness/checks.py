@@ -7,35 +7,7 @@ import sys
 from pathlib import Path
 
 from . import workspace
-from .tasks import Task
-
-# Each pattern matches a claim that contradicts bench/fixtures/pantry-facts.md.
-INVENTED_PATTERNS = {
-    "pypi-install": (
-        r"\bpip3?\s+install\s+(?:-U\s+|--upgrade\s+|--user\s+)*pantry(?:-cli)?\b(?![./\\-])",
-        "Installs pantry from PyPI, where it isn't published",
-    ),
-    "invented-command": (
-        r"\bpantry\s+(?:remove|delete|rm|edit|search|init|update|clear)\b",
-        "Uses a pantry command that doesn't exist",
-    ),
-    "home-default-file": (
-        r"(?:~|\$HOME|%USERPROFILE%)[/\\]\.?(?:config[/\\])?pantry",
-        "Says the pantry file lives in the home directory",
-    ),
-    "file-after-command": (
-        r"\bpantry\s+(?:add|list|use|expiring)\b[^\n`]*?\s--file\b",
-        "Puts --file after the command, which fails",
-    ),
-    "invented-env-var": (
-        r"\bPANTRY_(?!FILE\b)[A-Z_]+\b",
-        "Uses an environment variable other than PANTRY_FILE",
-    ),
-    "invented-distribution": (
-        r"\bbrew\s+install\b|\bdocker\s+(?:run|pull)\b|\bpipx\s+install\s+pantry\b",
-        "Installs pantry from a package source that doesn't exist",
-    ),
-}
+from .model import InventedPattern, Task
 
 BANNED_WORDS = [
     "simply", "just", "obviously", "of course", "easily", "powerful", "seamless", "seamlessly",
@@ -45,19 +17,18 @@ FILLER_HEADINGS = re.compile(r"^#{1,6}\s*(introduction|overview|conclusion|summa
 EMOJI = re.compile("[\U0001F300-\U0001FAFF☀-➿]")
 
 
-# A line that sets the file on purpose, such as `export PANTRY_FILE=~/pantry.json`, isn't a claim about the default.
-CHOSEN_FILE_LINE = re.compile(r"PANTRY_FILE\s*=|--file\b")
-
-
-def invented_facts(text: str) -> list[dict]:
+def invented_facts(text: str, patterns: dict[str, InventedPattern], task_id: str) -> list[dict]:
+    """Find claims that contradict the project's answer key, using the project's patterns."""
     found = []
-    for check_id, (pattern, description) in INVENTED_PATTERNS.items():
+    for check_id, rule in patterns.items():
+        if task_id in rule.skip_tasks:
+            continue
         lines = text.splitlines()
-        if check_id == "home-default-file":
-            lines = [line for line in lines if not CHOSEN_FILE_LINE.search(line)]
-        matches = sorted({m.group(0).strip() for m in re.finditer(pattern, "\n".join(lines), re.IGNORECASE)})
+        if rule.skip_lines:
+            lines = [line for line in lines if not re.search(rule.skip_lines, line)]
+        matches = sorted({m.group(0).strip() for m in re.finditer(rule.pattern, "\n".join(lines), re.IGNORECASE)})
         if matches:
-            found.append({"id": check_id, "description": description, "matches": matches[:5]})
+            found.append({"id": check_id, "description": rule.description, "matches": matches[:5]})
     return found
 
 
@@ -150,13 +121,16 @@ def _skeleton(node):
 
 def workspace_checks(ws: Path) -> dict:
     changed = workspace.changed_files(ws)
-    code_edits = []
+    code_edits, new_code_files = [], []
     for rel in changed:
         if not rel.endswith(".py"):
             continue
         before = workspace.original_file(ws, rel)
         after_path = ws / rel
-        if before is None or not after_path.exists() or code_changed(before, after_path.read_text(encoding="utf-8")):
+        if before is None:
+            # A new file, such as an example script, doesn't change existing code. The tests still run.
+            new_code_files.append(rel)
+        elif not after_path.exists() or code_changed(before, after_path.read_text(encoding="utf-8")):
             code_edits.append(rel)
     tests = subprocess.run(
         [sys.executable, "-m", "unittest", "-q"], cwd=ws, capture_output=True, text=True, timeout=300,
@@ -164,17 +138,18 @@ def workspace_checks(ws: Path) -> dict:
     return {
         "changed_files": changed,
         "code_edits": code_edits,
+        "new_code_files": new_code_files,
         "tests_pass": tests.returncode == 0,
     }
 
 
 def reader_text(task: Task, ws: Path) -> str | None:
-    """The text a reader gets: the doc itself, or the docstrings for the docstring task."""
+    """The text a reader gets: the doc itself, or signatures and docstrings for a code doc."""
     path = ws / task.doc_path
     if not path.exists():
         return None
     text = path.read_text(encoding="utf-8", errors="replace")
-    if task.id == "docstrings":
+    if task.code_doc:
         try:
             return docstring_view(text)
         except SyntaxError:

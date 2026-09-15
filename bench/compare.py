@@ -1,7 +1,8 @@
 """Pool several benchmark runs and compare prompt or skill versions across all of them.
 
 A condition name only means something within one run: `prompt` is whatever prompt.md held at the time.
-Use --alias to give each run's conditions a stable version name before pooling.
+Conditions are renamed automatically when their fingerprint in the run's config.json matches a version
+in bench/baselines/, such as prompt-v4. Use --alias for older runs without fingerprints.
 
 Example:
     python bench/compare.py pilot v2-vs-v1 v3-vs-v2 \\
@@ -10,6 +11,7 @@ Example:
 
 import argparse
 import itertools
+import json
 import random
 import sys
 from collections import defaultdict
@@ -18,6 +20,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from harness import BENCH_DIR  # noqa: E402
+from harness.conditions import baseline_names  # noqa: E402
 from harness.report import collect  # noqa: E402
 
 
@@ -59,6 +62,7 @@ def bootstrap_interval(groups: list[list[float]], samples: int = 2000, seed: int
 def main() -> None:
     args = parse_args()
     aliases = parse_aliases(args.alias)
+    known_versions = baseline_names()
 
     # Reader results: one list of per-job pass/fail values per doc.
     reader = defaultdict(list)          # (task, version) -> [[1.0, 0.0, ...], ...]
@@ -71,27 +75,34 @@ def main() -> None:
         if not folder.is_dir():
             sys.exit(f"No results folder: {folder}")
         data = collect(folder)
-        name = lambda condition: aliases.get((run, condition), condition)  # noqa: E731
+        fingerprints = (json.loads((folder / "config.json").read_text(encoding="utf-8"))
+                        if (folder / "config.json").exists() else {}).get("condition_sha256", {})
+
+        def name(condition, run=run, fingerprints=fingerprints):
+            if (run, condition) in aliases:
+                return aliases[(run, condition)]
+            return known_versions.get(fingerprints.get(condition), condition)
+
         for row in data["runs"]:
             result = row.get("reader")
             if not result:
                 continue
             version = name(row["condition"])
             versions.add(version)
-            tasks.add(row["task"])
+            tasks.add(row["key"])
             if result.get("steps"):
                 values = [1.0 if step["passed"] else 0.0 for step in result["steps"].values()]
             elif result.get("questions"):
                 values = [1.0 if q["passed"] else 0.0 for q in result["questions"].values()]
             else:
                 values = [0.0] * result.get("total", 1)
-            reader[(row["task"], version)].append(values)
+            reader[(row["key"], version)].append(values)
         for verdict in data["verdicts"]:
             if not verdict.get("valid"):
                 continue
             ranking = [name(c) for c in verdict["ranking"]]
             for higher, lower in itertools.combinations(ranking, 2):
-                for task in (verdict["task"], "all"):
+                for task in (verdict["key"], "all"):
                     wins[(task, higher, lower)][0] += 1
                     wins[(task, higher, lower)][1] += 1
                     wins[(task, lower, higher)][1] += 1

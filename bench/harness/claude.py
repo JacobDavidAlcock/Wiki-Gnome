@@ -57,6 +57,7 @@ def run_claude(
     transcript: Path,
     tools: list[str],
     allowed_tools: list[str] | None = None,
+    disallowed_tools: list[str] | None = None,
     append_system_prompt: str | None = None,
     timeout: int = 1200,
 ) -> Session:
@@ -76,6 +77,8 @@ def run_claude(
     ]
     if allowed_tools:
         cmd += ["--allowedTools", ",".join(allowed_tools)]
+    if disallowed_tools:
+        cmd += ["--disallowedTools", ",".join(disallowed_tools)]
     if append_system_prompt:
         cmd += ["--append-system-prompt", append_system_prompt]
 

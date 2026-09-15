@@ -5,7 +5,9 @@ from collections import defaultdict
 from pathlib import Path
 from statistics import mean
 
-CONDITION_ORDER = ["none", "oneline", "prompt-v1", "prompt", "skill-v1", "skill"]
+CONDITION_ORDER = ["none", "oneline", "prompt-v1", "prompt", "skill-v1", "skill", "skill-forced"]
+# Runs from before the benchmark had several projects all used pantry.
+DEFAULT_PROJECT = "pantry"
 
 
 def _load(path: Path) -> dict | None:
@@ -31,26 +33,78 @@ def _fmt(value, kind="num") -> str:
 
 
 def collect(results: Path) -> dict:
+    """Load every doc and verdict in a results folder.
+
+    Reads the raw runs/ and judge/ folders when they exist, and the committed docs.jsonl and
+    verdicts.jsonl otherwise, so reports and comparisons also work on a fresh clone.
+    """
     runs = []
-    for gen_path in sorted(results.glob("runs/*/*/*/run*/generate.json")):
+    for gen_path in sorted((results / "runs").rglob("generate.json")):
         gen = _load(gen_path)
         if gen:
+            gen.setdefault("project", DEFAULT_PROJECT)
             gen["reader"] = _load(gen_path.with_name("reader.json"))
             runs.append(gen)
+    if not runs:
+        runs = _load_jsonl(results / "docs.jsonl")
+
     verdicts = []
-    for judge_path in sorted(results.glob("judge/*/*/run*/pass*/judge.json")):
+    judge_dir = results / "judge"
+    for judge_path in sorted(judge_dir.rglob("judge.json")):
         verdict = _load(judge_path)
-        if verdict:
-            task, model, run = judge_path.parts[-5], judge_path.parts[-4], judge_path.parts[-3]
-            verdicts.append({**verdict, "task": task, "model": model, "run": run})
+        if not verdict:
+            continue
+        parts = judge_path.relative_to(judge_dir).parts[:-1]
+        # New layout: project/task/model/runN/passN. Older runs: task/model/runN/passN.
+        if len(parts) == 4:
+            parts = (DEFAULT_PROJECT, *parts)
+        identity = dict(zip(("project", "task", "model", "run", "pass"), parts))
+        verdicts.append({**identity, **verdict})
+    if not verdicts:
+        verdicts = _load_jsonl(results / "verdicts.jsonl")
+
+    for item in runs + verdicts:
+        item["key"] = f"{item['project']}/{item['task']}"
     return {"runs": runs, "verdicts": verdicts}
+
+
+def _load_jsonl(path: Path) -> list[dict]:
+    if not path.exists():
+        return []
+    return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
+
+
+def compact(data: dict) -> tuple[list[dict], list[dict]]:
+    """Strip docs and verdicts down to what reports and comparisons need, without transcripts."""
+    docs = []
+    for r in data["runs"]:
+        reader = r.get("reader") or {}
+        docs.append({
+            "project": r["project"], "task": r["task"], "condition": r["condition"], "model": r["model"],
+            "run": r["run"], "doc_written": r["doc_written"], "skill_loaded": r["skill_loaded"],
+            "invented": [{"id": f["id"]} for f in r["invented"]],
+            "checks": {"code_edits": r["checks"]["code_edits"], "tests_pass": r["checks"]["tests_pass"]},
+            "style": {k: r["style"][k] for k in ("words", "banned_per_1000_words", "avg_sentence_words",
+                                                  "filler_headings")},
+            "session": {k: r["session"][k] for k in ("ok", "num_turns", "duration_ms")},
+            "reader": {
+                "score": reader.get("score"), "passed": reader.get("passed"), "total": reader.get("total"),
+                "steps": {job: {"passed": step["passed"]} for job, step in (reader.get("steps") or {}).items()},
+                "questions": reader.get("questions") or {},
+            } if reader else None,
+        })
+    verdicts = [
+        {k: v[k] for k in ("project", "task", "model", "run", "pass", "valid", "ranking", "factual_errors")}
+        for v in data["verdicts"]
+    ]
+    return docs, verdicts
 
 
 def summarise(data: dict) -> dict:
     runs, verdicts = data["runs"], data["verdicts"]
     conditions = [c for c in CONDITION_ORDER if any(r["condition"] == c for r in runs)]
     conditions += sorted({r["condition"] for r in runs} - set(conditions))
-    tasks = sorted({r["task"] for r in runs})
+    tasks = sorted({r["key"] for r in runs})
 
     ranks, firsts, judged_errors = defaultdict(list), defaultdict(list), defaultdict(list)
     task_ranks = defaultdict(list)
@@ -60,7 +114,7 @@ def summarise(data: dict) -> dict:
         for position, condition in enumerate(verdict["ranking"], start=1):
             ranks[condition].append(position)
             firsts[condition].append(1.0 if position == 1 else 0.0)
-            task_ranks[(verdict["task"], condition)].append(position)
+            task_ranks[(verdict["key"], condition)].append(position)
             judged_errors[condition].append(len(verdict.get("factual_errors", {}).get(condition, [])))
 
     overall = {}
@@ -90,7 +144,7 @@ def summarise(data: dict) -> dict:
     for task in tasks:
         per_task[task] = {}
         for condition in conditions:
-            rows = [r for r in runs if r["task"] == task and r["condition"] == condition]
+            rows = [r for r in runs if r["key"] == task and r["condition"] == condition]
             per_task[task][condition] = {
                 "runs": len(rows),
                 "reader_score": _avg([r["reader"]["score"] for r in rows if r.get("reader")]),
@@ -102,7 +156,7 @@ def summarise(data: dict) -> dict:
     for r in runs:
         reader = r.get("reader") or {}
         for step, result in (reader.get("steps") or {}).items():
-            step_rates[step][r["condition"]].append(1.0 if result["passed"] else 0.0)
+            step_rates[f"{r['project']}/{step}"][r["condition"]].append(1.0 if result["passed"] else 0.0)
 
     invented_counts = defaultdict(lambda: defaultdict(int))
     for r in runs:
@@ -224,7 +278,12 @@ def render(summary: dict, config: dict) -> str:
 
 def write_report(results: Path) -> Path:
     config = _load(results / "config.json") or {}
-    summary = summarise(collect(results))
+    data = collect(results)
+    if (results / "runs").exists():
+        docs, verdicts = compact(data)
+        (results / "docs.jsonl").write_text("".join(json.dumps(d) + "\n" for d in docs), encoding="utf-8")
+        (results / "verdicts.jsonl").write_text("".join(json.dumps(v) + "\n" for v in verdicts), encoding="utf-8")
+    summary = summarise(data)
     (results / "summary.json").write_text(json.dumps(summary, indent=2), encoding="utf-8")
     path = results / "report.md"
     path.write_text(render(summary, config), encoding="utf-8")

@@ -4,11 +4,10 @@ import json
 import random
 from pathlib import Path
 
-from . import FIXTURES_DIR
 from .claude import parse_json_answer, run_claude
-from .tasks import Task
+from .model import Project, Task
 
-JUDGE_PROMPT = """You are reviewing documentation for a small command-line tool called pantry. Several writers were each given the same request, and each wrote their own version. Rank the versions from most to least useful.
+JUDGE_PROMPT = """You are reviewing documentation for {description}. Several writers were each given the same request, and each wrote their own version. Rank the versions from most to least useful.
 
 The request each writer received:
 <request>
@@ -20,7 +19,7 @@ The facts below are verified against the code. Use them to judge accuracy. The w
 {facts}
 </facts>
 
-Judge each version by how well it serves a developer who needs to get a job done with pantry:
+Judge each version by how well it serves a developer who needs to get a job done with {name}:
 - Accuracy: wrong or invented details are the most serious fault, because the reader acts on them.
 - Coverage: does it include what this kind of document needs, including behaviour a reader would trip over?
 - Clarity: can the reader find what they need and act on it quickly?
@@ -55,17 +54,20 @@ def build_documents(docs: dict[str, str | None], seed: str, reverse: bool) -> tu
 
 
 def run_judge(
-    task: Task, docs: dict[str, str | None], *, model: str, seed: str, reverse: bool, out_dir: Path, cwd: Path
+    project: Project, task: Task, docs: dict[str, str | None], *, model: str, seed: str, reverse: bool,
+    out_dir: Path, cwd: Path, identity: dict,
 ) -> dict:
     documents, labels = build_documents(docs, seed, reverse)
     prompt = JUDGE_PROMPT.format(
+        description=project.description,
+        name=project.id,
         request=task.prompt,
-        facts=(FIXTURES_DIR / "pantry-facts.md").read_text(encoding="utf-8"),
+        facts=project.facts_file.read_text(encoding="utf-8"),
         documents=documents,
     )
     cwd.mkdir(parents=True, exist_ok=True)
     session = run_claude(prompt, cwd=cwd, model=model, transcript=out_dir / "judge-transcript.jsonl", tools=[])
-    return interpret(session.result, labels, session.to_json(), out_dir)
+    return interpret(session.result, labels, session.to_json(), out_dir, identity)
 
 
 def reinterpret(out_dir: Path) -> dict | None:
@@ -80,17 +82,28 @@ def reinterpret(out_dir: Path) -> dict | None:
         except json.JSONDecodeError:
             continue
         if event.get("type") == "result":
-            return interpret(event.get("result") or "", previous["labels"], previous["session"], out_dir)
+            identity = {k: previous[k] for k in ("project", "task", "model", "run", "pass") if k in previous}
+            return interpret(event.get("result") or "", previous["labels"], previous["session"], out_dir, identity)
     return None
 
 
-def interpret(reply: str, labels: dict[str, str], session: dict, out_dir: Path) -> dict:
+def interpret(reply: str, labels: dict[str, str], session: dict, out_dir: Path, identity: dict) -> dict:
     verdict = parse_json_answer(reply) or {}
-    ranking = [labels[label] for label in verdict.get("ranking", []) if label in labels]
+
+    # Judges sometimes shorten "Version A" to "A".
+    def condition_for(label) -> str | None:
+        label = str(label).strip()
+        return labels.get(label) or labels.get(f"Version {label}")
+
+    ranking = [c for c in (condition_for(label) for label in verdict.get("ranking", [])) if c]
     valid = len(ranking) == len(labels) and len(set(ranking)) == len(labels)
-    errors = {labels[label]: items for label, items in (verdict.get("factual_errors") or {}).items() if label in labels}
-    reasons = {labels[label]: text for label, text in (verdict.get("reasons") or {}).items() if label in labels}
+    errors = {condition_for(label): items for label, items in (verdict.get("factual_errors") or {}).items()
+              if condition_for(label)}
+    reasons = {condition_for(label): text for label, text in (verdict.get("reasons") or {}).items()
+               if condition_for(label)}
     result = {
+        # Which project, task, model, run and pass this verdict belongs to.
+        **identity,
         "valid": valid,
         "labels": labels,
         "ranking": ranking if valid else [],

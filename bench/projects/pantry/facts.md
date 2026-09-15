@@ -1,6 +1,6 @@
 # Pantry answer key
 
-This file lists the facts a correct doc for `pantry/` must get right. It stays outside the `pantry/` folder so writing sessions never see it. The accuracy checker and the judge compare generated docs against it.
+This file lists the facts a correct doc for pantry must get right. It stays outside the `current/` folder, so writing sessions never see it. The accuracy checker and the judge compare generated docs against it.
 
 `pantry` is a command-line tool that tracks food in your kitchen and warns you before it expires. It is written in Python with no third-party dependencies.
 
@@ -9,13 +9,13 @@ This file lists the facts a correct doc for `pantry/` must get right. It stays o
 | Fact | Value |
 |---|---|
 | Python version | 3.10 or later |
-| Install from a clone | `pip install .` from the `pantry/` folder. An editable install, `pip install -e .`, also works. |
+| Install from a clone | `pip install .` from the project's root folder. An editable install, `pip install -e .`, also works. |
 | Command after install | `pantry` |
-| Run without installing | `python -m pantry` from the `pantry/` folder |
+| Run without installing | `python -m pantry` from the project's root folder |
 | Package name in `pyproject.toml` | `pantry-cli` |
 | Published to PyPI | No. `pip install pantry` or `pip install pantry-cli` does not install this project. |
 | Version | `0.2.0`, shown by `pantry --version` as `pantry 0.2.0` |
-| Run the tests | `python -m unittest` from the `pantry/` folder |
+| Run the tests | `python -m unittest` from the project's root folder |
 
 ## Global options
 
@@ -106,7 +106,7 @@ A doc that mentions any of these has invented them:
 
 ## Changes since 0.1.0
 
-The 0.1.0 source is in `pantry-0.1.0/`. The changelog task compares it with `pantry/`.
+The 0.1.0 source is in `previous/`. The changelog task compares it with `current/`.
 
 | Change | Type | What existing users notice |
 |---|---|---|
