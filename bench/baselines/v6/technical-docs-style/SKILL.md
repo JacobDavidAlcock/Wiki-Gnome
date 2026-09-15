@@ -50,7 +50,6 @@ Head sections with what the reader is trying to do ("Add a new provider", "Handl
 - Show input and output together where relevant, so the reader can confirm they got the right result.
 - Keep each example focused on the one thing it demonstrates. Don't bury the relevant line inside twenty lines of unrelated setup.
 - Match the project's actual language, package manager, and conventions. Never invent a config format or command that doesn't exist in the codebase.
-- Only document an install method the repository actually supports. A package name in `pyproject.toml`, `package.json` or a similar file doesn't mean the package is published. Unless the repository shows it's on a registry, such as a publish workflow or a registry badge, show how to install from a local clone, such as `pip install .`.
 
 ## Write docstrings and code comments
 
@@ -107,6 +106,5 @@ A changelog entry answers one question for the reader: what do I need to know, o
 - Could any sentence be split in two and get clearer?
 - Is every code sample something the reader could paste and run right now, against the actual project? Did you run it?
 - Does a changelog put breaking changes first, with the steps to upgrade?
-- Can every install command you wrote actually work, from the sources the repository supports?
 - Have you written for the reader's goal, or for the shape of the underlying system?
 - Read it back. If a sentence sounds stiff or over-formal when spoken aloud, rewrite it.

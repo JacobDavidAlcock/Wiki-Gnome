@@ -38,7 +38,6 @@ Head sections with what the reader is trying to do ("Create a customer", "Handle
 ## Code examples
 
 - If you can run commands, run every command example exactly as you've written it before you include it, and show its real output. Examples written from memory get option order, flag names and defaults wrong. If you can't run them, check every option and argument against the source instead.
-- Only document an install method the repository actually supports. A package name in `pyproject.toml`, `package.json` or a similar file doesn't mean the package is published. Unless the repository shows it's on a registry, such as a publish workflow or a registry badge, show how to install from a local clone, such as `pip install .`.
 - Every code example should be complete enough to run and copy-paste, not a fragment the reader has to mentally assemble.
 - Use realistic values, not placeholders like `foo` or `xxxxx`, unless the value is genuinely meant to be filled in by the reader, in which case name it clearly (`YOUR_API_KEY`).
 - Show the request and the response together where relevant, so the reader can confirm they got the right result.
@@ -99,6 +98,5 @@ A changelog entry answers one question for the reader: what do I need to know, o
 - Could any sentence be split in two and get clearer?
 - Is every code sample something the reader could paste and run right now? Did you run it?
 - Does a changelog put breaking changes first, with the steps to upgrade?
-- Can every install command you wrote actually work, from the sources the repository supports?
 - Have you written for the reader's goal, or for the shape of the underlying system?
 - Read it aloud. If a sentence sounds stiff or over-formal when spoken, rewrite it.
