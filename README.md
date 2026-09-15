@@ -80,23 +80,39 @@ This is a summary. The full rules are in [`SKILL.md`](.claude/skills/technical-d
 | Structure | Each page does one of four jobs, from the [Diátaxis](https://diataxis.fr/) framework: tutorial, how-to guide, reference or explanation. |
 | Headings | Name sections after what the reader is trying to do, not after components. |
 | Code | Run every command example before including it. Examples are complete, use realistic values and show input and output together. |
-| Docstrings | Describe what the signature can't show: return values, errors and when they're raised, side effects and edge cases. |
+| Install | Only document an install method the repository supports. A package name in `pyproject.toml` doesn't mean it's published. |
+| Docstrings | Use the project's docstring format, or the language's standard one. Give each parameter's valid values and units, and name every exception the code raises. |
 | Changelogs | Put breaking changes first, each with the steps to upgrade. Describe what changed for the reader, not in the code. |
 | Formatting | Numbered lists for ordered steps, bullets otherwise. Bold for UI elements, code font for identifiers. |
 
 ## Benchmark results
 
-The [`bench/`](bench/) folder tests whether Wiki-Gnome helps readers. Claude Haiku 4.5 writes docs for a small command-line tool with and without Wiki-Gnome. A fresh session then follows each doc: its commands are run for real, or it answers questions marked against an answer key. Claude Sonnet 5 also ranks the docs blind.
+The [`bench/`](bench/) folder tests whether Wiki-Gnome helps readers. Claude Haiku 4.5 writes docs for two small test projects, with and without Wiki-Gnome: `pantry`, a command-line tool, and `tally`, a Python library. A fresh session then follows each doc: its commands and scripts are run for real, or it answers questions marked against an answer key. Claude Sonnet 5 also ranks the docs blind.
 
-Results for the current `prompt.md`, pooled across runs:
+Reader success for the current `prompt.md` (version 5), pooled across runs:
 
-| Task | Reader success without Wiki-Gnome | Reader success with `prompt.md` |
-|---|---|---|
-| Changelog | 58% (11 docs) | 78% (3 docs) |
-| Docstrings | 35% (11 docs) | 75% (3 docs) |
-| README | 81% (16 docs) | 78% (8 docs) |
-| All three | 57% (38 docs) | 77% (14 docs) |
+| Project | Task | Without Wiki-Gnome | With `prompt.md` |
+|---|---|---|---|
+| pantry | Changelog | 56% (17 docs) | 72% (6 docs) |
+| pantry | Docstrings | 33% (17 docs) | 85% (6 docs) |
+| pantry | README | 84% (22 docs) | 63% (6 docs) |
+| tally | Changelog | 16% (9 docs) | 52% (6 docs) |
+| tally | Docstrings | 46% (9 docs) | 56% (6 docs) |
+| tally | README | 76% (9 docs) | 83% (6 docs) |
+| Both | All tasks | 53% (86 docs) | 68% (36 docs) |
 
-In the blind ranking, the judge put docs written with `prompt.md` above docs written without it in 75% of 28 comparisons.
+In the blind ranking, the judge put docs written with `prompt.md` above docs written without it in 78% of 72 comparisons.
 
-These are early results from one test project and small samples. READMEs don't improve yet: most README failures come from one detail, an option that must come before the command, and no version of the prompt has fixed it. See [`bench/results/comparison.md`](bench/results/comparison.md) for every version tested, and [`bench/README.md`](bench/README.md) to run the benchmark yourself.
+What the results show so far:
+
+- **Changelogs improve on both projects.** Without guidance, changelogs describe code changes instead of telling readers what to do before they upgrade.
+- **Docstrings improve on both projects.** Structured docstrings that name each exception beat both unguided docstrings and the earlier prose style.
+- **READMEs don't reliably improve.** The install rule stopped tally READMEs from pointing at a PyPI package that doesn't exist in 4 of 6 cases, against 0 of 15 without it. But on pantry, readers still put an option in the wrong place about as often with Wiki-Gnome as without.
+
+What they don't show yet:
+
+- **Whether Wiki-Gnome beats a one-line request for good docs.** "Write clear docs like Stripe's" has only been tested on 6 docs.
+- **Whether it helps stronger models.** Every doc so far was written by Claude Haiku 4.5.
+- **Whether it helps human readers.** Readers and the judge are Claude sessions, and both test projects are small and were built for the benchmark.
+
+See [`bench/results/comparison.md`](bench/results/comparison.md) for every version tested, and [`bench/README.md`](bench/README.md) to run the benchmark yourself.
