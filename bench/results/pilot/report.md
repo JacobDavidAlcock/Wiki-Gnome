@@ -25,9 +25,9 @@ Each cell shows reader success, then mean rank.
 
 | Task | `none` | `oneline` | `prompt` | `skill` |
 |---|---|---|---|---|
-| `changelog` | 67%, 2.25 | 67%, 2.50 | 58%, 2.75 | 67%, 2.50 |
-| `docstrings` | 25%, 2.75 | 31%, 3.00 | 75%, 1.00 | 31%, 3.25 |
-| `readme` | 70%, 3.75 | 100%, 2.25 | 70%, 1.75 | 100%, 2.25 |
+| `pantry/changelog` | 67%, 2.25 | 67%, 2.50 | 58%, 2.75 | 67%, 2.50 |
+| `pantry/docstrings` | 25%, 2.75 | 31%, 3.00 | 75%, 1.00 | 31%, 3.25 |
+| `pantry/readme` | 70%, 3.75 | 100%, 2.25 | 70%, 1.75 | 100%, 2.25 |
 
 ## Reader jobs that worked
 
@@ -35,11 +35,11 @@ Share of runs where the reader's commands for each job produced the right result
 
 | Job | `none` | `oneline` | `prompt` | `skill` |
 |---|---|---|---|---|
-| `install` | 100% | 100% | 100% | 100% |
-| `add` | 50% | 100% | 50% | 100% |
-| `check` | 50% | 100% | 50% | 100% |
-| `env` | 100% | 100% | 100% | 100% |
-| `use` | 50% | 100% | 50% | 100% |
+| `pantry/install` | 100% | 100% | 100% | 100% |
+| `pantry/add` | 50% | 100% | 50% | 100% |
+| `pantry/check` | 50% | 100% | 50% | 100% |
+| `pantry/env` | 100% | 100% | 100% | 100% |
+| `pantry/use` | 50% | 100% | 50% | 100% |
 
 ## Style and cost
 

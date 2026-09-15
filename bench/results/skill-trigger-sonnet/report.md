@@ -22,8 +22,8 @@ Each cell shows reader success, then mean rank.
 
 | Task | `skill` |
 |---|---|
-| `docstrings` | –, – |
-| `readme` | –, – |
+| `pantry/docstrings` | –, – |
+| `pantry/readme` | –, – |
 
 ## Style and cost
 

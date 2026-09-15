@@ -25,9 +25,9 @@ Each cell shows reader success, then mean rank.
 
 | Task | `none` | `prompt-v1` | `prompt` | `skill` |
 |---|---|---|---|---|
-| `changelog` | 61%, 2.33 | 67%, 2.67 | 83%, 2.00 | 56%, 3.00 |
-| `docstrings` | 50%, 3.17 | 83%, 1.00 | 75%, 2.33 | 46%, 3.50 |
-| `readme` | 100%, 2.50 | 80%, 1.67 | 40%, 3.50 | 100%, 2.33 |
+| `pantry/changelog` | 61%, 2.33 | 67%, 2.67 | 83%, 2.00 | 56%, 3.00 |
+| `pantry/docstrings` | 50%, 3.17 | 83%, 1.00 | 75%, 2.33 | 46%, 3.50 |
+| `pantry/readme` | 100%, 2.50 | 80%, 1.67 | 40%, 3.50 | 100%, 2.33 |
 
 ## Reader jobs that worked
 
@@ -35,11 +35,11 @@ Share of runs where the reader's commands for each job produced the right result
 
 | Job | `none` | `prompt-v1` | `prompt` | `skill` |
 |---|---|---|---|---|
-| `install` | 100% | 100% | 100% | 100% |
-| `add` | 100% | 67% | 0% | 100% |
-| `check` | 100% | 67% | 0% | 100% |
-| `env` | 100% | 100% | 100% | 100% |
-| `use` | 100% | 67% | 0% | 100% |
+| `pantry/install` | 100% | 100% | 100% | 100% |
+| `pantry/add` | 100% | 67% | 0% | 100% |
+| `pantry/check` | 100% | 67% | 0% | 100% |
+| `pantry/env` | 100% | 100% | 100% | 100% |
+| `pantry/use` | 100% | 67% | 0% | 100% |
 
 ## Invented facts found automatically
 

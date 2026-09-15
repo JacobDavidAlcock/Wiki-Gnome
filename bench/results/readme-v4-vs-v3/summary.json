@@ -5,7 +5,7 @@
     "prompt-v3"
   ],
   "tasks": [
-    "readme"
+    "pantry/readme"
   ],
   "overall": {
     "none": {
@@ -64,7 +64,7 @@
     }
   },
   "per_task": {
-    "readme": {
+    "pantry/readme": {
       "none": {
         "runs": 5,
         "reader_score": 0.88,
@@ -86,27 +86,27 @@
     }
   },
   "exec_steps": {
-    "install": {
+    "pantry/install": {
       "none": 0.4,
       "prompt": 1.0,
       "prompt-v3": 1.0
     },
-    "add": {
+    "pantry/add": {
       "none": 1.0,
       "prompt": 0.6,
       "prompt-v3": 0.4
     },
-    "check": {
+    "pantry/check": {
       "none": 1.0,
       "prompt": 0.6,
       "prompt-v3": 0.4
     },
-    "env": {
+    "pantry/env": {
       "none": 1.0,
       "prompt": 1.0,
       "prompt-v3": 1.0
     },
-    "use": {
+    "pantry/use": {
       "none": 1.0,
       "prompt": 0.6,
       "prompt-v3": 0.4

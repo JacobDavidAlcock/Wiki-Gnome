@@ -6,9 +6,9 @@
     "prompt-v2"
   ],
   "tasks": [
-    "changelog",
-    "docstrings",
-    "readme"
+    "pantry/changelog",
+    "pantry/docstrings",
+    "pantry/readme"
   ],
   "overall": {
     "none": {
@@ -85,7 +85,7 @@
     }
   },
   "per_task": {
-    "changelog": {
+    "pantry/changelog": {
       "none": {
         "runs": 3,
         "reader_score": 0.5,
@@ -111,7 +111,7 @@
         "invented_patterns": 0
       }
     },
-    "docstrings": {
+    "pantry/docstrings": {
       "none": {
         "runs": 3,
         "reader_score": 0.3333333333333333,
@@ -137,7 +137,7 @@
         "invented_patterns": 0
       }
     },
-    "readme": {
+    "pantry/readme": {
       "none": {
         "runs": 3,
         "reader_score": 0.6,
@@ -165,31 +165,31 @@
     }
   },
   "exec_steps": {
-    "install": {
+    "pantry/install": {
       "none": 1.0,
       "prompt": 1.0,
       "prompt-v1": 1.0,
       "prompt-v2": 1.0
     },
-    "add": {
+    "pantry/add": {
       "none": 0.3333333333333333,
       "prompt": 1.0,
       "prompt-v1": 0.6666666666666666,
       "prompt-v2": 0.6666666666666666
     },
-    "check": {
+    "pantry/check": {
       "none": 0.3333333333333333,
       "prompt": 1.0,
       "prompt-v1": 0.6666666666666666,
       "prompt-v2": 0.6666666666666666
     },
-    "env": {
+    "pantry/env": {
       "none": 1.0,
       "prompt": 1.0,
       "prompt-v1": 1.0,
       "prompt-v2": 1.0
     },
-    "use": {
+    "pantry/use": {
       "none": 0.3333333333333333,
       "prompt": 1.0,
       "prompt-v1": 0.6666666666666666,

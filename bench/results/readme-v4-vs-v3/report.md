@@ -24,7 +24,7 @@ Each cell shows reader success, then mean rank.
 
 | Task | `none` | `prompt` | `prompt-v3` |
 |---|---|---|---|
-| `readme` | 88%, 2.70 | 76%, 1.70 | 64%, 1.60 |
+| `pantry/readme` | 88%, 2.70 | 76%, 1.70 | 64%, 1.60 |
 
 ## Reader jobs that worked
 
@@ -32,11 +32,11 @@ Share of runs where the reader's commands for each job produced the right result
 
 | Job | `none` | `prompt` | `prompt-v3` |
 |---|---|---|---|
-| `install` | 40% | 100% | 100% |
-| `add` | 100% | 60% | 40% |
-| `check` | 100% | 60% | 40% |
-| `env` | 100% | 100% | 100% |
-| `use` | 100% | 60% | 40% |
+| `pantry/install` | 40% | 100% | 100% |
+| `pantry/add` | 100% | 60% | 40% |
+| `pantry/check` | 100% | 60% | 40% |
+| `pantry/env` | 100% | 100% | 100% |
+| `pantry/use` | 100% | 60% | 40% |
 
 ## Invented facts found automatically
 

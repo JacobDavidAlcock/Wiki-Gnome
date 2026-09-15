@@ -3,8 +3,8 @@
     "skill"
   ],
   "tasks": [
-    "docstrings",
-    "readme"
+    "pantry/docstrings",
+    "pantry/readme"
   ],
   "overall": {
     "skill": {
@@ -27,7 +27,7 @@
     }
   },
   "per_task": {
-    "docstrings": {
+    "pantry/docstrings": {
       "skill": {
         "runs": 1,
         "reader_score": null,
@@ -35,7 +35,7 @@
         "invented_patterns": 0
       }
     },
-    "readme": {
+    "pantry/readme": {
       "skill": {
         "runs": 1,
         "reader_score": null,
