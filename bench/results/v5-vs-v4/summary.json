@@ -1,0 +1,259 @@
+{
+  "conditions": [
+    "none",
+    "prompt",
+    "prompt-v4"
+  ],
+  "tasks": [
+    "pantry/changelog",
+    "pantry/docstrings",
+    "pantry/readme",
+    "tally/changelog",
+    "tally/docstrings",
+    "tally/readme"
+  ],
+  "overall": {
+    "none": {
+      "runs": 18,
+      "docs_written": 1.0,
+      "reader_score": 0.6005291005291006,
+      "mean_rank": 2.1944444444444446,
+      "first_place": 0.19444444444444445,
+      "judged_errors": 2.0277777777777777,
+      "invented_patterns": 0.16666666666666666,
+      "code_broken": 0,
+      "skill_loaded": 0.0,
+      "words": 221.44444444444446,
+      "banned_per_1000_words": 0.0,
+      "avg_sentence_words": 8.605555555555556,
+      "filler_headings": 0,
+      "writer_turns": 11.11111111111111,
+      "writer_minutes": 0.5917222222222223,
+      "session_errors": 0
+    },
+    "prompt": {
+      "runs": 18,
+      "docs_written": 1.0,
+      "reader_score": 0.6624338624338625,
+      "mean_rank": 1.6388888888888888,
+      "first_place": 0.5833333333333334,
+      "judged_errors": 1.5833333333333333,
+      "invented_patterns": 0.1111111111111111,
+      "code_broken": 0,
+      "skill_loaded": 0.0,
+      "words": 272.5,
+      "banned_per_1000_words": 0.23055555555555557,
+      "avg_sentence_words": 9.438888888888888,
+      "filler_headings": 0,
+      "writer_turns": 10,
+      "writer_minutes": 0.6051388888888889,
+      "session_errors": 0
+    },
+    "prompt-v4": {
+      "runs": 18,
+      "docs_written": 1.0,
+      "reader_score": 0.7029761904761904,
+      "mean_rank": 2.1666666666666665,
+      "first_place": 0.2222222222222222,
+      "judged_errors": 1.7777777777777777,
+      "invented_patterns": 0.16666666666666666,
+      "code_broken": 0,
+      "skill_loaded": 0.0,
+      "words": 278.27777777777777,
+      "banned_per_1000_words": 0.19722222222222222,
+      "avg_sentence_words": 10.277777777777779,
+      "filler_headings": 0.05555555555555555,
+      "writer_turns": 11.055555555555555,
+      "writer_minutes": 0.6038703703703704,
+      "session_errors": 0
+    }
+  },
+  "per_task": {
+    "pantry/changelog": {
+      "none": {
+        "runs": 3,
+        "reader_score": 0.5555555555555556,
+        "mean_rank": 1.8333333333333333,
+        "invented_patterns": 0
+      },
+      "prompt": {
+        "runs": 3,
+        "reader_score": 0.7777777777777778,
+        "mean_rank": 1.1666666666666667,
+        "invented_patterns": 0
+      },
+      "prompt-v4": {
+        "runs": 3,
+        "reader_score": 0.7777777777777778,
+        "mean_rank": 3,
+        "invented_patterns": 0
+      }
+    },
+    "pantry/docstrings": {
+      "none": {
+        "runs": 3,
+        "reader_score": 0.3333333333333333,
+        "mean_rank": 2.6666666666666665,
+        "invented_patterns": 0
+      },
+      "prompt": {
+        "runs": 3,
+        "reader_score": 0.8333333333333334,
+        "mean_rank": 1,
+        "invented_patterns": 0
+      },
+      "prompt-v4": {
+        "runs": 3,
+        "reader_score": 0.7083333333333334,
+        "mean_rank": 2.3333333333333335,
+        "invented_patterns": 0
+      }
+    },
+    "pantry/readme": {
+      "none": {
+        "runs": 3,
+        "reader_score": 1.0,
+        "mean_rank": 2.5,
+        "invented_patterns": 0
+      },
+      "prompt": {
+        "runs": 3,
+        "reader_score": 0.4666666666666667,
+        "mean_rank": 1.8333333333333333,
+        "invented_patterns": 0
+      },
+      "prompt-v4": {
+        "runs": 3,
+        "reader_score": 0.8666666666666667,
+        "mean_rank": 1.6666666666666667,
+        "invented_patterns": 0
+      }
+    },
+    "tally/changelog": {
+      "none": {
+        "runs": 3,
+        "reader_score": 0.38095238095238093,
+        "mean_rank": 2.5,
+        "invented_patterns": 0
+      },
+      "prompt": {
+        "runs": 3,
+        "reader_score": 0.6190476190476191,
+        "mean_rank": 1.6666666666666667,
+        "invented_patterns": 0
+      },
+      "prompt-v4": {
+        "runs": 3,
+        "reader_score": 0.47619047619047616,
+        "mean_rank": 1.8333333333333333,
+        "invented_patterns": 0
+      }
+    },
+    "tally/docstrings": {
+      "none": {
+        "runs": 3,
+        "reader_score": 0.4444444444444444,
+        "mean_rank": 1.8333333333333333,
+        "invented_patterns": 0
+      },
+      "prompt": {
+        "runs": 3,
+        "reader_score": 0.5555555555555556,
+        "mean_rank": 1.6666666666666667,
+        "invented_patterns": 0
+      },
+      "prompt-v4": {
+        "runs": 3,
+        "reader_score": 0.5555555555555556,
+        "mean_rank": 2.5,
+        "invented_patterns": 0
+      }
+    },
+    "tally/readme": {
+      "none": {
+        "runs": 3,
+        "reader_score": 0.888888888888889,
+        "mean_rank": 1.8333333333333333,
+        "invented_patterns": 1
+      },
+      "prompt": {
+        "runs": 3,
+        "reader_score": 0.7222222222222222,
+        "mean_rank": 2.5,
+        "invented_patterns": 0.6666666666666666
+      },
+      "prompt-v4": {
+        "runs": 3,
+        "reader_score": 0.8333333333333334,
+        "mean_rank": 1.6666666666666667,
+        "invented_patterns": 1
+      }
+    }
+  },
+  "exec_steps": {
+    "pantry/install": {
+      "none": 1.0,
+      "prompt": 1.0,
+      "prompt-v4": 1.0
+    },
+    "pantry/add": {
+      "none": 1.0,
+      "prompt": 0.0,
+      "prompt-v4": 0.6666666666666666
+    },
+    "pantry/check": {
+      "none": 1.0,
+      "prompt": 0.3333333333333333,
+      "prompt-v4": 1.0
+    },
+    "pantry/env": {
+      "none": 1.0,
+      "prompt": 1.0,
+      "prompt-v4": 1.0
+    },
+    "pantry/use": {
+      "none": 1.0,
+      "prompt": 0.0,
+      "prompt-v4": 0.6666666666666666
+    },
+    "tally/install": {
+      "none": 0.3333333333333333,
+      "prompt": 0.3333333333333333,
+      "prompt-v4": 0.3333333333333333
+    },
+    "tally/balance": {
+      "none": 1.0,
+      "prompt": 1.0,
+      "prompt-v4": 1.0
+    },
+    "tally/weights": {
+      "none": 1.0,
+      "prompt": 0.3333333333333333,
+      "prompt-v4": 0.6666666666666666
+    },
+    "tally/settle": {
+      "none": 1.0,
+      "prompt": 0.6666666666666666,
+      "prompt-v4": 1.0
+    },
+    "tally/save_load": {
+      "none": 1.0,
+      "prompt": 1.0,
+      "prompt-v4": 1.0
+    },
+    "tally/error": {
+      "none": 1.0,
+      "prompt": 1.0,
+      "prompt-v4": 1.0
+    }
+  },
+  "invented_by_pattern": {
+    "pypi-install": {
+      "none": 3,
+      "prompt": 2,
+      "prompt-v4": 3
+    }
+  },
+  "judge_verdicts": 36,
+  "invalid_verdicts": 0
+}

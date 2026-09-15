@@ -1,0 +1,30 @@
+{
+  "projects": [
+    "tally"
+  ],
+  "tasks": [
+    "tally/readme",
+    "tally/api-reference",
+    "tally/docstrings",
+    "tally/changelog"
+  ],
+  "conditions": {
+    "none": "No guidance",
+    "prompt-v1": "Wiki-Gnome prompt.md, v1",
+    "prompt": "Wiki-Gnome prompt.md",
+    "skill-forced": "Wiki-Gnome skill, loaded by instruction"
+  },
+  "condition_sha256": {
+    "none": null,
+    "prompt-v1": "814c7f0f452b",
+    "prompt": "6ae029629207",
+    "skill-forced": "cc89231e6d81"
+  },
+  "models": [
+    "haiku"
+  ],
+  "runs": 3,
+  "reader_model": "haiku",
+  "judge_model": "sonnet",
+  "judge_passes": 2
+}

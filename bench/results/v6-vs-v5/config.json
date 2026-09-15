@@ -1,0 +1,33 @@
+{
+  "projects": [
+    "pantry",
+    "tally"
+  ],
+  "tasks": [
+    "pantry/readme",
+    "pantry/docstrings",
+    "pantry/changelog",
+    "tally/readme",
+    "tally/docstrings",
+    "tally/changelog"
+  ],
+  "conditions": {
+    "none": "No guidance",
+    "prompt-v4": "Wiki-Gnome prompt.md, v4",
+    "prompt-v5": "Wiki-Gnome prompt.md, v5",
+    "prompt": "Wiki-Gnome prompt.md"
+  },
+  "condition_sha256": {
+    "none": null,
+    "prompt-v4": "6ae029629207",
+    "prompt-v5": "13424f7e9b2f",
+    "prompt": "e5ba6e7bb3c7"
+  },
+  "models": [
+    "haiku"
+  ],
+  "runs": 3,
+  "reader_model": "haiku",
+  "judge_model": "sonnet",
+  "judge_passes": 2
+}
