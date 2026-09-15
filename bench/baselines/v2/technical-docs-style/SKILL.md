@@ -1,6 +1,6 @@
 ---
 name: technical-docs-style
-description: Load this skill before you write, edit or review any developer documentation, and follow it. That includes a README, docstrings, code comments, an API or CLI reference, a quickstart, tutorial or how-to guide, a changelog or release notes, and command help text. Load it even when the request is short and doesn't mention style, such as "document this", "add docstrings", "write a changelog" or "update the README". It covers voice, structure, runnable examples checked against the code, docstrings and changelogs.
+description: Load this skill before you write, edit or review any developer documentation, and follow it. That includes a README, docstrings, code comments, an API or CLI reference, a quickstart, tutorial or how-to guide, a changelog or release notes, and command help text. Load it even when the request is short and doesn't mention style, such as "document this", "add docstrings", "write a changelog" or "update the README". It covers how to check facts against the code, which behaviour readers need warning about, and how to write each kind of doc.
 ---
 
 # Technical documentation style
@@ -42,14 +42,32 @@ A README typically mixes a short tutorial (getting started) with reference (conf
 
 Head sections with what the reader is trying to do ("Add a new provider", "Handle a failed request"), not with the name of a component ("The Provider class", "Error handling internals"). Lead each section with the reader's goal in the first sentence. Give the shortest path to a working result first, then link out to edge cases and advanced options rather than front-loading them.
 
+## Check every fact against the code
+
+Readers copy what you write and act on it, so a wrong detail costs them more than a missing one.
+
+- Before you document a command, option, default, file path, environment variable or exit code, find it in the code or run it.
+- If you can't confirm a detail, leave it out rather than guess.
+- Match the project's actual language, package manager and conventions. Never invent a command, flag, config format or install method that doesn't exist in the codebase.
+
+## Warn readers about behaviour they will trip over
+
+Readers get stuck where the tool doesn't behave the way they'd guess. Look for these in the code and state each one plainly, next to the instructions it affects:
+
+- **Order that matters.** For example, global options that must come before a subcommand, or a step that must run first. State the rule in words; an example alone isn't enough, because readers change the order without knowing it matters.
+- **Defaults.** Where data is stored, default values, and what happens when an input is missing.
+- **Errors and exit codes.** What each one means and what the reader does about it.
+- **Edge cases.** Empty input, zero, duplicates, values out of range, and items that already exist.
+- **Anything that differs from similar tools.** Readers bring habits from tools they already know.
+
+For example, write "Global options go before the command: `deployctl --config prod.toml push` works, but `deployctl push --config prod.toml` fails." Don't leave the reader to notice the order in an example.
+
 ## Code examples
 
-- Run every command example exactly as you've written it before you include it, and show its real output. Examples written from memory get option order, flag names and defaults wrong. If a command can't run in your environment, check every option and argument against the code instead.
 - Every example should be complete enough to copy, paste and run, not a fragment the reader has to mentally assemble.
 - Use realistic values, not placeholders like `foo` or `xxxxx`, unless the value is genuinely meant to be filled in by the reader, in which case name it clearly (`YOUR_API_KEY`).
 - Show input and output together where relevant, so the reader can confirm they got the right result.
 - Keep each example focused on the one thing it demonstrates. Don't bury the relevant line inside twenty lines of unrelated setup.
-- Match the project's actual language, package manager, and conventions. Never invent a config format or command that doesn't exist in the codebase.
 
 ## Write docstrings and code comments
 
@@ -89,9 +107,10 @@ A changelog entry answers one question for the reader: what do I need to know, o
 
 ## Before finishing, check
 
+- Did you confirm every command, option, default and path against the code?
+- Did you state the order rules, defaults, errors and edge cases a reader will trip over, in words?
 - Would a reader encountering this term for the first time understand it from context alone?
 - Could any sentence be split in two and get clearer?
-- Is every code sample something the reader could paste and run right now, against the actual project? Did you run it?
-- Does a changelog put breaking changes first, with the steps to upgrade?
+- Is every code sample something the reader could paste and run right now, against the actual project?
 - Have you written for the reader's goal, or for the shape of the underlying system?
 - Read it back. If a sentence sounds stiff or over-formal when spoken aloud, rewrite it.

@@ -1,6 +1,6 @@
 ---
 name: technical-docs-style
-description: Load this skill before you write, edit or review any developer documentation, and follow it. That includes a README, docstrings, code comments, an API or CLI reference, a quickstart, tutorial or how-to guide, a changelog or release notes, and command help text. Load it even when the request is short and doesn't mention style, such as "document this", "add docstrings", "write a changelog" or "update the README". It covers voice, structure, runnable examples checked against the code, docstrings and changelogs.
+description: House style for writing technical documentation in the style of the Stripe and Google developer docs. Use this whenever writing or editing a README, API reference, quickstart, tutorial, how-to guide, docstring, CLI help text, changelog entry, or any other developer-facing documentation, even if the user just says "document this" or "add docs" without specifying a style. Also use when reviewing existing documentation for clarity or tone.
 ---
 
 # Technical documentation style
@@ -44,41 +44,11 @@ Head sections with what the reader is trying to do ("Add a new provider", "Handl
 
 ## Code examples
 
-- Run every command example exactly as you've written it before you include it, and show its real output. Examples written from memory get option order, flag names and defaults wrong. If a command can't run in your environment, check every option and argument against the code instead.
 - Every example should be complete enough to copy, paste and run, not a fragment the reader has to mentally assemble.
 - Use realistic values, not placeholders like `foo` or `xxxxx`, unless the value is genuinely meant to be filled in by the reader, in which case name it clearly (`YOUR_API_KEY`).
 - Show input and output together where relevant, so the reader can confirm they got the right result.
 - Keep each example focused on the one thing it demonstrates. Don't bury the relevant line inside twenty lines of unrelated setup.
 - Match the project's actual language, package manager, and conventions. Never invent a config format or command that doesn't exist in the codebase.
-
-## Write docstrings and code comments
-
-A docstring is read in an editor tooltip, next to a signature that already shows the name and types. Spend its words on what the signature can't show.
-
-- Start with a one-sentence summary of what the function does.
-- Then describe the behaviour a caller needs: what it returns, which errors it raises and when, side effects such as writing files, and what happens in edge cases.
-- Don't restate the name or the types. "Load the items" adds nothing to `load_items(path) -> list[Item]`.
-- In code comments, explain why the code does something, not what it does.
-
-For example:
-
-```python
-def withdraw(account: Account, amount: int) -> int:
-    """Take money out of an account and return the new balance.
-
-    Raises InsufficientFunds if amount is more than the balance, and leaves
-    the balance unchanged. An amount of 0 is allowed and changes nothing.
-    """
-```
-
-## Write changelogs and release notes
-
-A changelog entry answers one question for the reader: what do I need to know, or do, before I upgrade?
-
-- Read the whole diff, not only the commit messages. Changes to validation, defaults, file formats and error handling are the easiest to miss and the most likely to break someone's setup.
-- Put breaking changes first, under their own heading. For each one, say what stops working and give the steps to fix it.
-- Describe what changed for the reader, not what changed in the code: "`deploy` now waits for health checks before it exits", not "Refactored the deploy polling loop".
-- Group the remaining changes under **Added**, **Changed** and **Fixed**.
 
 ## Formatting
 
@@ -91,7 +61,6 @@ A changelog entry answers one question for the reader: what do I need to know, o
 
 - Would a reader encountering this term for the first time understand it from context alone?
 - Could any sentence be split in two and get clearer?
-- Is every code sample something the reader could paste and run right now, against the actual project? Did you run it?
-- Does a changelog put breaking changes first, with the steps to upgrade?
+- Is every code sample something the reader could paste and run right now, against the actual project?
 - Have you written for the reader's goal, or for the shape of the underlying system?
 - Read it back. If a sentence sounds stiff or over-formal when spoken aloud, rewrite it.

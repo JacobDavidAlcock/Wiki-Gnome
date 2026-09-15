@@ -43,28 +43,6 @@ Head sections with what the reader is trying to do ("Create a customer", "Handle
 - Show the request and the response together where relevant, so the reader can confirm they got the right result.
 - Keep each example focused on the one thing it's demonstrating. Don't bury the relevant line in twenty lines of unrelated setup.
 
-## Write docstrings and code comments
-
-A docstring is read in an editor tooltip, next to a signature that already shows the name and types. Spend its words on what the signature can't show.
-
-- Start with a one-sentence summary of what the function does.
-- Then describe the behaviour a caller needs: what it returns, which errors it raises and when, side effects such as network calls or writes, and what happens in edge cases.
-- Don't restate the name or the types. "Create a refund" adds nothing to `create_refund(charge_id: str) -> Refund`.
-- In code comments, explain why the code does something, not what it does.
-
-For example:
-
-```python
-def create_refund(charge_id: str, amount: int | None = None) -> Refund:
-    """Refund a charge, in full or in part, and return the refund.
-
-    If amount is None, refunds whatever hasn't been refunded yet. Raises
-    ChargeNotFound if the charge doesn't exist, and InvalidAmount if amount
-    is more than the refundable balance. Calling it on a fully refunded
-    charge raises InvalidAmount.
-    """
-```
-
 ## Write changelogs and release notes
 
 A changelog entry answers one question for the reader: what do I need to know, or do, before I upgrade?

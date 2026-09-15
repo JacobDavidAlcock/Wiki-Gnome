@@ -1,6 +1,6 @@
 ---
 name: technical-docs-style
-description: Load this skill before you write, edit or review any developer documentation, and follow it. That includes a README, docstrings, code comments, an API or CLI reference, a quickstart, tutorial or how-to guide, a changelog or release notes, and command help text. Load it even when the request is short and doesn't mention style, such as "document this", "add docstrings", "write a changelog" or "update the README". It covers voice, structure, runnable examples checked against the code, docstrings and changelogs.
+description: Load this skill before you write, edit or review any developer documentation, and follow it. That includes a README, docstrings, code comments, an API or CLI reference, a quickstart, tutorial or how-to guide, a changelog or release notes, and command help text. Load it even when the request is short and doesn't mention style, such as "document this", "add docstrings", "write a changelog" or "update the README". It covers voice, structure, runnable examples checked against the code, and changelogs.
 ---
 
 # Technical documentation style
@@ -50,26 +50,6 @@ Head sections with what the reader is trying to do ("Add a new provider", "Handl
 - Show input and output together where relevant, so the reader can confirm they got the right result.
 - Keep each example focused on the one thing it demonstrates. Don't bury the relevant line inside twenty lines of unrelated setup.
 - Match the project's actual language, package manager, and conventions. Never invent a config format or command that doesn't exist in the codebase.
-
-## Write docstrings and code comments
-
-A docstring is read in an editor tooltip, next to a signature that already shows the name and types. Spend its words on what the signature can't show.
-
-- Start with a one-sentence summary of what the function does.
-- Then describe the behaviour a caller needs: what it returns, which errors it raises and when, side effects such as writing files, and what happens in edge cases.
-- Don't restate the name or the types. "Load the items" adds nothing to `load_items(path) -> list[Item]`.
-- In code comments, explain why the code does something, not what it does.
-
-For example:
-
-```python
-def withdraw(account: Account, amount: int) -> int:
-    """Take money out of an account and return the new balance.
-
-    Raises InsufficientFunds if amount is more than the balance, and leaves
-    the balance unchanged. An amount of 0 is allowed and changes nothing.
-    """
-```
 
 ## Write changelogs and release notes
 

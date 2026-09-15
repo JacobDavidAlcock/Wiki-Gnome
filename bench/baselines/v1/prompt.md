@@ -37,42 +37,10 @@ Head sections with what the reader is trying to do ("Create a customer", "Handle
 
 ## Code examples
 
-- If you can run commands, run every command example exactly as you've written it before you include it, and show its real output. Examples written from memory get option order, flag names and defaults wrong. If you can't run them, check every option and argument against the source instead.
 - Every code example should be complete enough to run and copy-paste, not a fragment the reader has to mentally assemble.
 - Use realistic values, not placeholders like `foo` or `xxxxx`, unless the value is genuinely meant to be filled in by the reader, in which case name it clearly (`YOUR_API_KEY`).
 - Show the request and the response together where relevant, so the reader can confirm they got the right result.
 - Keep each example focused on the one thing it's demonstrating. Don't bury the relevant line in twenty lines of unrelated setup.
-
-## Write docstrings and code comments
-
-A docstring is read in an editor tooltip, next to a signature that already shows the name and types. Spend its words on what the signature can't show.
-
-- Start with a one-sentence summary of what the function does.
-- Then describe the behaviour a caller needs: what it returns, which errors it raises and when, side effects such as network calls or writes, and what happens in edge cases.
-- Don't restate the name or the types. "Create a refund" adds nothing to `create_refund(charge_id: str) -> Refund`.
-- In code comments, explain why the code does something, not what it does.
-
-For example:
-
-```python
-def create_refund(charge_id: str, amount: int | None = None) -> Refund:
-    """Refund a charge, in full or in part, and return the refund.
-
-    If amount is None, refunds whatever hasn't been refunded yet. Raises
-    ChargeNotFound if the charge doesn't exist, and InvalidAmount if amount
-    is more than the refundable balance. Calling it on a fully refunded
-    charge raises InvalidAmount.
-    """
-```
-
-## Write changelogs and release notes
-
-A changelog entry answers one question for the reader: what do I need to know, or do, before I upgrade?
-
-- Read the whole diff, not only the commit messages. Changes to validation, defaults, data formats and error handling are the easiest to miss and the most likely to break someone's integration.
-- Put breaking changes first, under their own heading. For each one, say what stops working and give the steps to fix it.
-- Describe what changed for the reader, not what changed in the code: "Webhooks now retry for up to 3 days", not "Refactored the retry scheduler".
-- Group the remaining changes under **Added**, **Changed** and **Fixed**.
 
 ## Formatting
 
@@ -85,7 +53,6 @@ A changelog entry answers one question for the reader: what do I need to know, o
 
 - Would a reader encountering this term for the first time understand it from context alone, or did you assume prior knowledge you haven't earned?
 - Could any sentence be split in two and get clearer?
-- Is every code sample something the reader could paste and run right now? Did you run it?
-- Does a changelog put breaking changes first, with the steps to upgrade?
+- Is every code sample something the reader could paste and run right now?
 - Have you written for the reader's goal, or for the shape of the underlying system?
 - Read it aloud. If a sentence sounds stiff or over-formal when spoken, rewrite it.
