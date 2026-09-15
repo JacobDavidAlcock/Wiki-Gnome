@@ -1,0 +1,51 @@
+{
+  "conditions": [
+    "skill"
+  ],
+  "tasks": [
+    "docstrings",
+    "readme"
+  ],
+  "overall": {
+    "skill": {
+      "runs": 2,
+      "docs_written": 1.0,
+      "reader_score": null,
+      "mean_rank": null,
+      "first_place": null,
+      "judged_errors": null,
+      "invented_patterns": 0,
+      "code_broken": 0,
+      "skill_loaded": 1.0,
+      "words": 398,
+      "banned_per_1000_words": 0.0,
+      "avg_sentence_words": 11.05,
+      "filler_headings": 0,
+      "writer_turns": 16.5,
+      "writer_minutes": 1.4319083333333333,
+      "session_errors": 0
+    }
+  },
+  "per_task": {
+    "docstrings": {
+      "skill": {
+        "runs": 1,
+        "reader_score": null,
+        "mean_rank": null,
+        "invented_patterns": 0
+      }
+    },
+    "readme": {
+      "skill": {
+        "runs": 1,
+        "reader_score": null,
+        "mean_rank": null,
+        "invented_patterns": 0
+      }
+    }
+  },
+  "exec_steps": {},
+  "invented_by_pattern": {},
+  "judge_verdicts": 0,
+  "invalid_verdicts": 0
+}

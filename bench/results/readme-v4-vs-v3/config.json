@@ -1,0 +1,22 @@
+{
+  "tasks": [
+    "readme"
+  ],
+  "conditions": {
+    "none": "No guidance",
+    "prompt-v3": "Wiki-Gnome prompt.md, v3",
+    "prompt": "Wiki-Gnome prompt.md"
+  },
+  "condition_sha256": {
+    "none": null,
+    "prompt-v3": "74567bc41261",
+    "prompt": "6ae029629207"
+  },
+  "models": [
+    "haiku"
+  ],
+  "runs": 5,
+  "reader_model": "haiku",
+  "judge_model": "sonnet",
+  "judge_passes": 2
+}

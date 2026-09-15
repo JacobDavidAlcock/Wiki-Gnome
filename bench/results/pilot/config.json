@@ -1,0 +1,20 @@
+{
+  "tasks": [
+    "readme",
+    "docstrings",
+    "changelog"
+  ],
+  "conditions": {
+    "none": "No guidance",
+    "oneline": "One-line prompt",
+    "prompt": "Wiki-Gnome prompt.md",
+    "skill": "Wiki-Gnome skill"
+  },
+  "models": [
+    "haiku"
+  ],
+  "runs": 2,
+  "reader_model": "haiku",
+  "judge_model": "sonnet",
+  "judge_passes": 2
+}

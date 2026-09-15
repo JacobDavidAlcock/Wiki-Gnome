@@ -1,0 +1,202 @@
+{
+  "conditions": [
+    "none",
+    "oneline",
+    "prompt",
+    "skill"
+  ],
+  "tasks": [
+    "changelog",
+    "docstrings",
+    "readme"
+  ],
+  "overall": {
+    "none": {
+      "runs": 6,
+      "docs_written": 1.0,
+      "reader_score": 0.5388888888888889,
+      "mean_rank": 2.9166666666666665,
+      "first_place": 0.08333333333333333,
+      "judged_errors": 1.3333333333333333,
+      "invented_patterns": 0,
+      "code_broken": 0,
+      "skill_loaded": 0.0,
+      "words": 204.66666666666666,
+      "banned_per_1000_words": 0.0,
+      "avg_sentence_words": 9.633333333333333,
+      "filler_headings": 0,
+      "writer_turns": 9.5,
+      "writer_minutes": 0.5436361111111111,
+      "session_errors": 0
+    },
+    "oneline": {
+      "runs": 6,
+      "docs_written": 1.0,
+      "reader_score": 0.6597222222222222,
+      "mean_rank": 2.5833333333333335,
+      "first_place": 0.25,
+      "judged_errors": 0.6666666666666666,
+      "invented_patterns": 0,
+      "code_broken": 0,
+      "skill_loaded": 0.0,
+      "words": 173.16666666666666,
+      "banned_per_1000_words": 0.0,
+      "avg_sentence_words": 8.433333333333334,
+      "filler_headings": 0,
+      "writer_turns": 9.333333333333334,
+      "writer_minutes": 0.5314861111111111,
+      "session_errors": 0
+    },
+    "prompt": {
+      "runs": 6,
+      "docs_written": 1.0,
+      "reader_score": 0.6777777777777778,
+      "mean_rank": 1.8333333333333333,
+      "first_place": 0.4166666666666667,
+      "judged_errors": 0.6666666666666666,
+      "invented_patterns": 0,
+      "code_broken": 0,
+      "skill_loaded": 0.0,
+      "words": 209.83333333333334,
+      "banned_per_1000_words": 0.6533333333333333,
+      "avg_sentence_words": 9.633333333333333,
+      "filler_headings": 0,
+      "writer_turns": 10.5,
+      "writer_minutes": 0.5797722222222222,
+      "session_errors": 0
+    },
+    "skill": {
+      "runs": 6,
+      "docs_written": 1.0,
+      "reader_score": 0.6597222222222222,
+      "mean_rank": 2.6666666666666665,
+      "first_place": 0.25,
+      "judged_errors": 0.6666666666666666,
+      "invented_patterns": 0,
+      "code_broken": 0,
+      "skill_loaded": 0.0,
+      "words": 162,
+      "banned_per_1000_words": 0.8300000000000001,
+      "avg_sentence_words": 8.816666666666666,
+      "filler_headings": 0,
+      "writer_turns": 10,
+      "writer_minutes": 0.4832194444444444,
+      "session_errors": 0
+    }
+  },
+  "per_task": {
+    "changelog": {
+      "none": {
+        "runs": 2,
+        "reader_score": 0.6666666666666666,
+        "mean_rank": 2.25,
+        "invented_patterns": 0
+      },
+      "oneline": {
+        "runs": 2,
+        "reader_score": 0.6666666666666666,
+        "mean_rank": 2.5,
+        "invented_patterns": 0
+      },
+      "prompt": {
+        "runs": 2,
+        "reader_score": 0.5833333333333333,
+        "mean_rank": 2.75,
+        "invented_patterns": 0
+      },
+      "skill": {
+        "runs": 2,
+        "reader_score": 0.6666666666666666,
+        "mean_rank": 2.5,
+        "invented_patterns": 0
+      }
+    },
+    "docstrings": {
+      "none": {
+        "runs": 2,
+        "reader_score": 0.25,
+        "mean_rank": 2.75,
+        "invented_patterns": 0
+      },
+      "oneline": {
+        "runs": 2,
+        "reader_score": 0.3125,
+        "mean_rank": 3,
+        "invented_patterns": 0
+      },
+      "prompt": {
+        "runs": 2,
+        "reader_score": 0.75,
+        "mean_rank": 1,
+        "invented_patterns": 0
+      },
+      "skill": {
+        "runs": 2,
+        "reader_score": 0.3125,
+        "mean_rank": 3.25,
+        "invented_patterns": 0
+      }
+    },
+    "readme": {
+      "none": {
+        "runs": 2,
+        "reader_score": 0.7,
+        "mean_rank": 3.75,
+        "invented_patterns": 0
+      },
+      "oneline": {
+        "runs": 2,
+        "reader_score": 1.0,
+        "mean_rank": 2.25,
+        "invented_patterns": 0
+      },
+      "prompt": {
+        "runs": 2,
+        "reader_score": 0.7,
+        "mean_rank": 1.75,
+        "invented_patterns": 0
+      },
+      "skill": {
+        "runs": 2,
+        "reader_score": 1.0,
+        "mean_rank": 2.25,
+        "invented_patterns": 0
+      }
+    }
+  },
+  "exec_steps": {
+    "install": {
+      "none": 1.0,
+      "oneline": 1.0,
+      "prompt": 1.0,
+      "skill": 1.0
+    },
+    "add": {
+      "none": 0.5,
+      "oneline": 1.0,
+      "prompt": 0.5,
+      "skill": 1.0
+    },
+    "check": {
+      "none": 0.5,
+      "oneline": 1.0,
+      "prompt": 0.5,
+      "skill": 1.0
+    },
+    "env": {
+      "none": 1.0,
+      "oneline": 1.0,
+      "prompt": 1.0,
+      "skill": 1.0
+    },
+    "use": {
+      "none": 0.5,
+      "oneline": 1.0,
+      "prompt": 0.5,
+      "skill": 1.0
+    }
+  },
+  "invented_by_pattern": {},
+  "judge_verdicts": 12,
+  "invalid_verdicts": 0
+}

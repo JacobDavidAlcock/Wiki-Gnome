@@ -1,0 +1,202 @@
+{
+  "conditions": [
+    "none",
+    "prompt-v1",
+    "prompt",
+    "prompt-v3"
+  ],
+  "tasks": [
+    "changelog",
+    "docstrings",
+    "readme"
+  ],
+  "overall": {
+    "none": {
+      "runs": 9,
+      "docs_written": 1.0,
+      "reader_score": 0.549074074074074,
+      "mean_rank": 3.3333333333333335,
+      "first_place": 0.1111111111111111,
+      "judged_errors": 1.3333333333333333,
+      "invented_patterns": 0,
+      "code_broken": 0,
+      "skill_loaded": 0.0,
+      "words": 177,
+      "banned_per_1000_words": 0.0,
+      "avg_sentence_words": 8.855555555555556,
+      "filler_headings": 0,
+      "writer_turns": 10,
+      "writer_minutes": 0.5658703703703704,
+      "session_errors": 0
+    },
+    "prompt-v1": {
+      "runs": 9,
+      "docs_written": 1.0,
+      "reader_score": 0.6462962962962963,
+      "mean_rank": 2.4444444444444446,
+      "first_place": 0.16666666666666666,
+      "judged_errors": 0.16666666666666666,
+      "invented_patterns": 0,
+      "code_broken": 0,
+      "skill_loaded": 0.0,
+      "words": 171.88888888888889,
+      "banned_per_1000_words": 0.0,
+      "avg_sentence_words": 9.055555555555555,
+      "filler_headings": 0,
+      "writer_turns": 10.222222222222221,
+      "writer_minutes": 0.5880314814814814,
+      "session_errors": 0
+    },
+    "prompt": {
+      "runs": 9,
+      "docs_written": 1.0,
+      "reader_score": 0.7759259259259259,
+      "mean_rank": 2.3333333333333335,
+      "first_place": 0.3888888888888889,
+      "judged_errors": 0.8888888888888888,
+      "invented_patterns": 0,
+      "code_broken": 0,
+      "skill_loaded": 0.0,
+      "words": 242.77777777777777,
+      "banned_per_1000_words": 0.4555555555555555,
+      "avg_sentence_words": 10.88888888888889,
+      "filler_headings": 0,
+      "writer_turns": 9.333333333333334,
+      "writer_minutes": 0.5605518518518519,
+      "session_errors": 0
+    },
+    "prompt-v3": {
+      "runs": 9,
+      "docs_written": 1.0,
+      "reader_score": 0.8240740740740741,
+      "mean_rank": 1.8888888888888888,
+      "first_place": 0.3333333333333333,
+      "judged_errors": 0.6666666666666666,
+      "invented_patterns": 0,
+      "code_broken": 0,
+      "skill_loaded": 0.0,
+      "words": 197.66666666666666,
+      "banned_per_1000_words": 0.5311111111111111,
+      "avg_sentence_words": 10.322222222222223,
+      "filler_headings": 0,
+      "writer_turns": 10.11111111111111,
+      "writer_minutes": 0.5558944444444445,
+      "session_errors": 0
+    }
+  },
+  "per_task": {
+    "changelog": {
+      "none": {
+        "runs": 3,
+        "reader_score": 0.5555555555555556,
+        "mean_rank": 3,
+        "invented_patterns": 0
+      },
+      "prompt-v1": {
+        "runs": 3,
+        "reader_score": 0.5555555555555556,
+        "mean_rank": 2.8333333333333335,
+        "invented_patterns": 0
+      },
+      "prompt": {
+        "runs": 3,
+        "reader_score": 0.7777777777777778,
+        "mean_rank": 2.1666666666666665,
+        "invented_patterns": 0
+      },
+      "prompt-v3": {
+        "runs": 3,
+        "reader_score": 0.7222222222222222,
+        "mean_rank": 2,
+        "invented_patterns": 0
+      }
+    },
+    "docstrings": {
+      "none": {
+        "runs": 3,
+        "reader_score": 0.2916666666666667,
+        "mean_rank": 3.6666666666666665,
+        "invented_patterns": 0
+      },
+      "prompt-v1": {
+        "runs": 3,
+        "reader_score": 0.5833333333333334,
+        "mean_rank": 3,
+        "invented_patterns": 0
+      },
+      "prompt": {
+        "runs": 3,
+        "reader_score": 0.75,
+        "mean_rank": 1.5,
+        "invented_patterns": 0
+      },
+      "prompt-v3": {
+        "runs": 3,
+        "reader_score": 0.75,
+        "mean_rank": 1.8333333333333333,
+        "invented_patterns": 0
+      }
+    },
+    "readme": {
+      "none": {
+        "runs": 3,
+        "reader_score": 0.8,
+        "mean_rank": 3.3333333333333335,
+        "invented_patterns": 0
+      },
+      "prompt-v1": {
+        "runs": 3,
+        "reader_score": 0.8,
+        "mean_rank": 1.5,
+        "invented_patterns": 0
+      },
+      "prompt": {
+        "runs": 3,
+        "reader_score": 0.8,
+        "mean_rank": 3.3333333333333335,
+        "invented_patterns": 0
+      },
+      "prompt-v3": {
+        "runs": 3,
+        "reader_score": 1.0,
+        "mean_rank": 1.8333333333333333,
+        "invented_patterns": 0
+      }
+    }
+  },
+  "exec_steps": {
+    "install": {
+      "none": 1.0,
+      "prompt": 1.0,
+      "prompt-v1": 1.0,
+      "prompt-v3": 1.0
+    },
+    "add": {
+      "none": 0.6666666666666666,
+      "prompt": 0.6666666666666666,
+      "prompt-v1": 0.6666666666666666,
+      "prompt-v3": 1.0
+    },
+    "check": {
+      "none": 0.6666666666666666,
+      "prompt": 0.6666666666666666,
+      "prompt-v1": 0.6666666666666666,
+      "prompt-v3": 1.0
+    },
+    "env": {
+      "none": 1.0,
+      "prompt": 1.0,
+      "prompt-v1": 1.0,
+      "prompt-v3": 1.0
+    },
+    "use": {
+      "none": 0.6666666666666666,
+      "prompt": 0.6666666666666666,
+      "prompt-v1": 0.6666666666666666,
+      "prompt-v3": 1.0
+    }
+  },
+  "invented_by_pattern": {},
+  "judge_verdicts": 18,
+  "invalid_verdicts": 0
+}

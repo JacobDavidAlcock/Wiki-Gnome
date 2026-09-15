@@ -1,0 +1,122 @@
+{
+  "conditions": [
+    "none",
+    "prompt",
+    "prompt-v3"
+  ],
+  "tasks": [
+    "readme"
+  ],
+  "overall": {
+    "none": {
+      "runs": 5,
+      "docs_written": 1.0,
+      "reader_score": 0.88,
+      "mean_rank": 2.7,
+      "first_place": 0.1,
+      "judged_errors": 1.9,
+      "invented_patterns": 0.6,
+      "code_broken": 0,
+      "skill_loaded": 0.0,
+      "words": 187.2,
+      "banned_per_1000_words": 0.0,
+      "avg_sentence_words": 7.48,
+      "filler_headings": 0,
+      "writer_turns": 8.8,
+      "writer_minutes": 0.43529,
+      "session_errors": 0
+    },
+    "prompt": {
+      "runs": 5,
+      "docs_written": 1.0,
+      "reader_score": 0.76,
+      "mean_rank": 1.7,
+      "first_place": 0.3,
+      "judged_errors": 1.4,
+      "invented_patterns": 0,
+      "code_broken": 0,
+      "skill_loaded": 0.0,
+      "words": 282.2,
+      "banned_per_1000_words": 0.0,
+      "avg_sentence_words": 7.9799999999999995,
+      "filler_headings": 0,
+      "writer_turns": 8.8,
+      "writer_minutes": 0.53108,
+      "session_errors": 0
+    },
+    "prompt-v3": {
+      "runs": 5,
+      "docs_written": 1.0,
+      "reader_score": 0.64,
+      "mean_rank": 1.6,
+      "first_place": 0.6,
+      "judged_errors": 0.5,
+      "invented_patterns": 0,
+      "code_broken": 0,
+      "skill_loaded": 0.0,
+      "words": 242.2,
+      "banned_per_1000_words": 0.0,
+      "avg_sentence_words": 8.28,
+      "filler_headings": 0,
+      "writer_turns": 9.4,
+      "writer_minutes": 0.4813466666666667,
+      "session_errors": 0
+    }
+  },
+  "per_task": {
+    "readme": {
+      "none": {
+        "runs": 5,
+        "reader_score": 0.88,
+        "mean_rank": 2.7,
+        "invented_patterns": 0.6
+      },
+      "prompt": {
+        "runs": 5,
+        "reader_score": 0.76,
+        "mean_rank": 1.7,
+        "invented_patterns": 0
+      },
+      "prompt-v3": {
+        "runs": 5,
+        "reader_score": 0.64,
+        "mean_rank": 1.6,
+        "invented_patterns": 0
+      }
+    }
+  },
+  "exec_steps": {
+    "install": {
+      "none": 0.4,
+      "prompt": 1.0,
+      "prompt-v3": 1.0
+    },
+    "add": {
+      "none": 1.0,
+      "prompt": 0.6,
+      "prompt-v3": 0.4
+    },
+    "check": {
+      "none": 1.0,
+      "prompt": 0.6,
+      "prompt-v3": 0.4
+    },
+    "env": {
+      "none": 1.0,
+      "prompt": 1.0,
+      "prompt-v3": 1.0
+    },
+    "use": {
+      "none": 1.0,
+      "prompt": 0.6,
+      "prompt-v3": 0.4
+    }
+  },
+  "invented_by_pattern": {
+    "pypi-install": {
+      "none": 3
+    }
+  },
+  "judge_verdicts": 10,
+  "invalid_verdicts": 0
+}

@@ -1,0 +1,16 @@
+{
+  "tasks": [
+    "readme",
+    "docstrings"
+  ],
+  "conditions": {
+    "skill": "Wiki-Gnome skill"
+  },
+  "models": [
+    "sonnet"
+  ],
+  "runs": 1,
+  "reader_model": "haiku",
+  "judge_model": "sonnet",
+  "judge_passes": 2
+}
