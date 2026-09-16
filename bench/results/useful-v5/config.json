@@ -1,0 +1,32 @@
+{
+  "projects": [
+    "pantry",
+    "tally"
+  ],
+  "tasks": [
+    "pantry/readme",
+    "pantry/docstrings",
+    "pantry/changelog",
+    "tally/readme",
+    "tally/docstrings",
+    "tally/changelog"
+  ],
+  "conditions": {
+    "none": "No guidance",
+    "oneline": "One-line prompt",
+    "prompt": "Wiki-Gnome prompt.md"
+  },
+  "condition_sha256": {
+    "none": null,
+    "oneline": "c2939848dda8",
+    "prompt": "13424f7e9b2f"
+  },
+  "models": [
+    "haiku",
+    "sonnet"
+  ],
+  "runs": 3,
+  "reader_model": "haiku",
+  "judge_model": "sonnet",
+  "judge_passes": 2
+}

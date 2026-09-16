@@ -1,0 +1,258 @@
+{
+  "conditions": [
+    "none",
+    "oneline",
+    "prompt"
+  ],
+  "tasks": [
+    "pantry/changelog",
+    "pantry/docstrings",
+    "pantry/readme",
+    "tally/changelog",
+    "tally/docstrings",
+    "tally/readme"
+  ],
+  "overall": {
+    "none": {
+      "runs": 36,
+      "docs_written": 1.0,
+      "reader_score": 0.6047619047619047,
+      "mean_rank": 2.2777777777777777,
+      "first_place": 0.1111111111111111,
+      "judged_errors": 1.1527777777777777,
+      "invented_patterns": 0.1111111111111111,
+      "code_broken": 0,
+      "skill_loaded": 0.0,
+      "words": 218.97222222222223,
+      "banned_per_1000_words": 0.1597222222222222,
+      "avg_sentence_words": 10.805555555555555,
+      "filler_headings": 0,
+      "writer_turns": 10.75,
+      "writer_minutes": 0.561063425925926,
+      "session_errors": 0
+    },
+    "oneline": {
+      "runs": 36,
+      "docs_written": 1.0,
+      "reader_score": 0.5825396825396826,
+      "mean_rank": 2.388888888888889,
+      "first_place": 0.1111111111111111,
+      "judged_errors": 1.3055555555555556,
+      "invented_patterns": 0.16666666666666666,
+      "code_broken": 0,
+      "skill_loaded": 0.0,
+      "words": 214.47222222222223,
+      "banned_per_1000_words": 0.12027777777777778,
+      "avg_sentence_words": 11.002777777777778,
+      "filler_headings": 0,
+      "writer_turns": 10.972222222222221,
+      "writer_minutes": 0.5881037037037037,
+      "session_errors": 0
+    },
+    "prompt": {
+      "runs": 36,
+      "docs_written": 1.0,
+      "reader_score": 0.8342702821869489,
+      "mean_rank": 1.3333333333333333,
+      "first_place": 0.7777777777777778,
+      "judged_errors": 1.0555555555555556,
+      "invented_patterns": 0,
+      "code_broken": 0,
+      "skill_loaded": 0.0,
+      "words": 314.25,
+      "banned_per_1000_words": 0.5927777777777777,
+      "avg_sentence_words": 11.619444444444444,
+      "filler_headings": 0.027777777777777776,
+      "writer_turns": 12.305555555555555,
+      "writer_minutes": 0.9096407407407407,
+      "session_errors": 0
+    }
+  },
+  "per_task": {
+    "pantry/changelog": {
+      "none": {
+        "runs": 6,
+        "reader_score": 0.7222222222222222,
+        "mean_rank": 2.75,
+        "invented_patterns": 0
+      },
+      "oneline": {
+        "runs": 6,
+        "reader_score": 0.75,
+        "mean_rank": 1.75,
+        "invented_patterns": 0
+      },
+      "prompt": {
+        "runs": 6,
+        "reader_score": 0.8333333333333334,
+        "mean_rank": 1.5,
+        "invented_patterns": 0
+      }
+    },
+    "pantry/docstrings": {
+      "none": {
+        "runs": 6,
+        "reader_score": 0.4166666666666667,
+        "mean_rank": 2,
+        "invented_patterns": 0
+      },
+      "oneline": {
+        "runs": 6,
+        "reader_score": 0.3333333333333333,
+        "mean_rank": 2.8333333333333335,
+        "invented_patterns": 0
+      },
+      "prompt": {
+        "runs": 6,
+        "reader_score": 0.8958333333333334,
+        "mean_rank": 1.1666666666666667,
+        "invented_patterns": 0
+      }
+    },
+    "pantry/readme": {
+      "none": {
+        "runs": 6,
+        "reader_score": 0.7,
+        "mean_rank": 2.25,
+        "invented_patterns": 0
+      },
+      "oneline": {
+        "runs": 6,
+        "reader_score": 0.9,
+        "mean_rank": 2.1666666666666665,
+        "invented_patterns": 0
+      },
+      "prompt": {
+        "runs": 6,
+        "reader_score": 0.8333333333333334,
+        "mean_rank": 1.5833333333333333,
+        "invented_patterns": 0
+      }
+    },
+    "tally/changelog": {
+      "none": {
+        "runs": 6,
+        "reader_score": 0.4285714285714286,
+        "mean_rank": 2,
+        "invented_patterns": 0
+      },
+      "oneline": {
+        "runs": 6,
+        "reader_score": 0.42857142857142855,
+        "mean_rank": 2.3333333333333335,
+        "invented_patterns": 0
+      },
+      "prompt": {
+        "runs": 6,
+        "reader_score": 0.6190476190476191,
+        "mean_rank": 1.6666666666666667,
+        "invented_patterns": 0
+      }
+    },
+    "tally/docstrings": {
+      "none": {
+        "runs": 6,
+        "reader_score": 0.5,
+        "mean_rank": 2.0833333333333335,
+        "invented_patterns": 0
+      },
+      "oneline": {
+        "runs": 6,
+        "reader_score": 0.2222222222222222,
+        "mean_rank": 2.9166666666666665,
+        "invented_patterns": 0
+      },
+      "prompt": {
+        "runs": 6,
+        "reader_score": 0.8518518518518519,
+        "mean_rank": 1,
+        "invented_patterns": 0
+      }
+    },
+    "tally/readme": {
+      "none": {
+        "runs": 6,
+        "reader_score": 0.8611111111111112,
+        "mean_rank": 2.5833333333333335,
+        "invented_patterns": 0.6666666666666666
+      },
+      "oneline": {
+        "runs": 6,
+        "reader_score": 0.8611111111111112,
+        "mean_rank": 2.3333333333333335,
+        "invented_patterns": 1
+      },
+      "prompt": {
+        "runs": 6,
+        "reader_score": 0.9722222222222222,
+        "mean_rank": 1.0833333333333333,
+        "invented_patterns": 0
+      }
+    }
+  },
+  "exec_steps": {
+    "pantry/install": {
+      "none": 1.0,
+      "oneline": 1.0,
+      "prompt": 1.0
+    },
+    "pantry/add": {
+      "none": 0.5,
+      "oneline": 0.8333333333333334,
+      "prompt": 0.6666666666666666
+    },
+    "pantry/check": {
+      "none": 0.5,
+      "oneline": 0.8333333333333334,
+      "prompt": 0.6666666666666666
+    },
+    "pantry/env": {
+      "none": 1.0,
+      "oneline": 1.0,
+      "prompt": 1.0
+    },
+    "pantry/use": {
+      "none": 0.5,
+      "oneline": 0.8333333333333334,
+      "prompt": 0.8333333333333334
+    },
+    "tally/install": {
+      "none": 0.3333333333333333,
+      "oneline": 0.3333333333333333,
+      "prompt": 1.0
+    },
+    "tally/balance": {
+      "none": 1.0,
+      "oneline": 1.0,
+      "prompt": 1.0
+    },
+    "tally/weights": {
+      "none": 0.8333333333333334,
+      "oneline": 0.8333333333333334,
+      "prompt": 0.8333333333333334
+    },
+    "tally/settle": {
+      "none": 1.0,
+      "oneline": 1.0,
+      "prompt": 1.0
+    },
+    "tally/save_load": {
+      "none": 1.0,
+      "oneline": 1.0,
+      "prompt": 1.0
+    },
+    "tally/error": {
+      "none": 1.0,
+      "oneline": 1.0,
+      "prompt": 1.0
+    }
+  },
+  "invented_by_pattern": {
+    "pypi-install": {
+      "none": 4,
+      "oneline": 6
+    }
+  },
+  "judge_verdicts": 72,
+  "invalid_verdicts": 0
+}
