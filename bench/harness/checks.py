@@ -17,13 +17,20 @@ FILLER_HEADINGS = re.compile(r"^#{1,6}\s*(introduction|overview|conclusion|summa
 EMOJI = re.compile("[\U0001F300-\U0001FAFF☀-➿]")
 
 
+# A line that warns against the wrong usage, such as "`pantry list --file x` fails", isn't a false claim.
+WARNING_LINE = re.compile(
+    r"\b(?:not|fails?|won't|doesn't|don't|can't|never|wrong|incorrect|invalid\w*|instead|raises?|\w*error)\b|✗|❌",
+    re.IGNORECASE,
+)
+
+
 def invented_facts(text: str, patterns: dict[str, InventedPattern], task_id: str) -> list[dict]:
     """Find claims that contradict the project's answer key, using the project's patterns."""
     found = []
     for check_id, rule in patterns.items():
         if task_id in rule.skip_tasks:
             continue
-        lines = text.splitlines()
+        lines = [line for line in text.splitlines() if not WARNING_LINE.search(line)]
         if rule.skip_lines:
             lines = [line for line in lines if not re.search(rule.skip_lines, line)]
         matches = sorted({m.group(0).strip() for m in re.finditer(rule.pattern, "\n".join(lines), re.IGNORECASE)})

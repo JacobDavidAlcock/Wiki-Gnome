@@ -119,6 +119,11 @@ class InventedFactTests(unittest.TestCase):
         self.assertEqual(self.found("tally", "pip install tally"), ["pypi-install"])
         self.assertEqual(self.found("tally", "pip install ./tally"), [])
 
+    def test_warnings_against_wrong_usage_are_not_claims(self):
+        self.assertEqual(self.found("pantry", "pantry list --file ~/kitchen.json      # fails"), [])
+        self.assertEqual(self.found("pantry", "Use `pantry --file x list`, not `pantry list --file x`."), [])
+        self.assertEqual(self.found("tally", 'ledger.add_expense("Ana", 12.50)  # InvalidAmount: use 1250'), [])
+
     def test_changelog_may_describe_the_old_api(self):
         text = "`tally.load(path)` is replaced by `Ledger.load`. `add_person` is now `add_member`."
         self.assertEqual(self.found("tally", text, task="changelog"), [])
