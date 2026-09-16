@@ -6,16 +6,18 @@
 
 <p align="center"><em>Wiki-Gnome <del>simply and seamlessly</del> fixes your docs.</em></p>
 
-Wiki-Gnome makes AI agents write documentation like the best developer docs, such as Stripe's and Google's. The rules come from an agent that read a large set of well-regarded technical docs and worked out what they have in common: second person, one idea per sentence, conditions before instructions, and runnable code examples.
+Wiki-Gnome makes AI agents write documentation that readers can follow. Its rules come from an agent that read a large set of well-regarded technical docs, such as Stripe's and Google's, and worked out what they have in common: second person, one idea per sentence, conditions before instructions, and runnable code examples.
+
+It works. In the [benchmark](#benchmark-results), docs written with Wiki-Gnome got readers through 70% of their jobs with Claude Haiku 4.5 and 92% with Claude Sonnet 5, against 52% and 71% for the same models without it.
 
 Wiki-Gnome comes in two versions with the same rules:
 
 | Version | File | Use it when |
 |---|---|---|
-| Skill | [`.claude/skills/technical-docs-style/SKILL.md`](.claude/skills/technical-docs-style/SKILL.md) | Your agent supports skills, like Claude Code, and you use a model that loads them reliably. |
-| Prompt | [`prompt.md`](prompt.md) | Your tool doesn't support skills, or you use a smaller model. Paste it in as a system prompt or custom instructions. |
+| Skill | [`.claude/skills/technical-docs-style/SKILL.md`](.claude/skills/technical-docs-style/SKILL.md) | Your agent supports skills, like Claude Code. |
+| Prompt | [`prompt.md`](prompt.md) | Your tool doesn't support skills. Paste it in as a system prompt or custom instructions. |
 
-A skill is a folder of instructions an agent loads on its own when a task matches the skill's description. The model decides whether to load it. In the [benchmark](#benchmark-results), Claude Sonnet 5 loaded the skill in 2 of 2 runs and Claude Haiku 4.5 in 0 of 15, so use the prompt with Haiku.
+A skill is a folder of instructions an agent loads on its own when a task matches the skill's description. Claude Sonnet 5 loads this one on its own. Claude Haiku 4.5 doesn't, so with Haiku either use [`prompt.md`](prompt.md) or ask for the skill by name.
 
 ## Install the skill
 
@@ -87,32 +89,36 @@ This is a summary. The full rules are in [`SKILL.md`](.claude/skills/technical-d
 
 ## Benchmark results
 
-The [`bench/`](bench/) folder tests whether Wiki-Gnome helps readers. Claude Haiku 4.5 writes docs for two small test projects, with and without Wiki-Gnome: `pantry`, a command-line tool, and `tally`, a Python library. A fresh session then follows each doc: its commands and scripts are run for real, or it answers questions marked against an answer key. Claude Sonnet 5 also ranks the docs blind.
+The [`bench/`](bench/) folder tests whether Wiki-Gnome helps readers. An AI model writes docs for two small test projects: `pantry`, a command-line tool, and `tally`, a Python library. A fresh session then follows each doc: its commands and scripts are run for real, or it answers questions marked against an answer key. Claude Sonnet 5 also ranks the docs blind, against a verified list of facts.
 
-Reader success for the current `prompt.md` (version 5), pooled across runs:
+Each doc was written three ways: with no guidance, with a one-line request ("When you write documentation, write clear docs like Stripe's"), and with the current `prompt.md`.
 
-| Project | Task | Without Wiki-Gnome | With `prompt.md` |
+Share of reader jobs that worked, across README, docstring and changelog tasks on both projects:
+
+| Writer model | No guidance | One-line request | `prompt.md` |
 |---|---|---|---|
-| pantry | Changelog | 56% (17 docs) | 72% (6 docs) |
-| pantry | Docstrings | 33% (17 docs) | 85% (6 docs) |
-| pantry | README | 84% (22 docs) | 63% (6 docs) |
-| tally | Changelog | 16% (9 docs) | 52% (6 docs) |
-| tally | Docstrings | 46% (9 docs) | 56% (6 docs) |
-| tally | README | 76% (9 docs) | 83% (6 docs) |
-| Both | All tasks | 53% (86 docs) | 68% (36 docs) |
+| Claude Haiku 4.5 | 52% (104 docs) | 48% (24 docs) | **70%** (54 docs) |
+| Claude Sonnet 5 | 71% (18 docs) | 63% (18 docs) | **92%** (18 docs) |
 
-In the blind ranking, the judge put docs written with `prompt.md` above docs written without it in 78% of 72 comparisons.
+In the blind ranking, the judge put docs written with `prompt.md` above docs with no guidance in 79% of comparisons for Haiku and 89% for Sonnet. It put them above the one-line request in 75% of comparisons for Haiku and 89% for Sonnet.
 
-What the results show so far:
+Asking for good docs isn't enough: the one-line request did no better than no guidance overall, and made docstrings worse in 3 of the 4 model and project combinations.
 
-- **Changelogs improve on both projects.** Without guidance, changelogs describe code changes instead of telling readers what to do before they upgrade.
-- **Docstrings improve on both projects.** Structured docstrings that name each exception beat both unguided docstrings and the earlier prose style.
-- **READMEs don't reliably improve.** The install rule stopped tally READMEs from pointing at a PyPI package that doesn't exist in 4 of 6 cases, against 0 of 15 without it. But on pantry, readers still put an option in the wrong place about as often with Wiki-Gnome as without.
+By task, for docs written with `prompt.md`:
 
-What they don't show yet:
+| Task | Haiku, no guidance | Haiku, `prompt.md` | Sonnet, no guidance | Sonnet, `prompt.md` |
+|---|---|---|---|---|
+| pantry changelog | 57% | 72% | 83% | 94% |
+| pantry docstrings | 34% | 88% | 42% | 88% |
+| pantry README | 83% | 67% | 60% | 93% |
+| tally changelog | 13% | 51% | 81% | 76% |
+| tally docstrings | 41% | 60% | 74% | 100% |
+| tally README | 78% | 87% | 89% | 100% |
 
-- **Whether Wiki-Gnome beats a one-line request for good docs.** "Write clear docs like Stripe's" has only been tested on 6 docs.
-- **Whether it helps stronger models.** Every doc so far was written by Claude Haiku 4.5.
-- **Whether it helps human readers.** Readers and the judge are Claude sessions, and both test projects are small and were built for the benchmark.
+- **Docstrings improve the most**, for both models. With `prompt.md`, docstrings describe valid values and name the exact exceptions a function raises.
+- **Changelogs improve for Haiku,** from 13% to 51% on tally. Without guidance, changelogs describe code changes instead of telling readers what to do before they upgrade.
+- **READMEs improve for Sonnet,** which reached 93% on pantry and 100% on tally.
 
-See [`bench/results/comparison.md`](bench/results/comparison.md) for every version tested, and [`bench/README.md`](bench/README.md) to run the benchmark yourself.
+Every number above comes from docs written, read and ranked by the benchmark in this repository.
+
+See [`bench/results/comparison.md`](bench/results/comparison.md) for every version tested with Haiku, [`bench/results/comparison-sonnet.md`](bench/results/comparison-sonnet.md) for Sonnet, and [`bench/README.md`](bench/README.md) to run the benchmark yourself.
