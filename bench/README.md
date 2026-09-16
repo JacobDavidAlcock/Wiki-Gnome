@@ -158,8 +158,10 @@ The judge ranks every condition in a run together, so keep to 4 or 5 conditions 
 A single run of 3 is noisy: the same version can score 40% on a task in one run and 80% in the next. Before you keep or drop a change, pool every run that tested it:
 
 ```sh
-python bench/compare.py v4-vs-v3 readme-v4-vs-v3 --out bench/results/comparison.md
+python bench/compare.py v4-vs-v3 readme-v4-vs-v3 --models haiku --out bench/results/comparison.md
 ```
+
+Pass `--models` to compare one writer model at a time. Without it, docs from every model are pooled together.
 
 `compare.py` names each condition after the baseline version it matches, using the `condition_sha256` fingerprints in each run's `config.json`. In the command above, `prompt` becomes `prompt-v4`. Runs from before fingerprints were recorded need `--alias`, such as `--alias v2-vs-v1:prompt=prompt-v2`.
 
@@ -167,6 +169,18 @@ The output has 2 tables:
 
 - **Reader success** for each version and task, with a 95% bootstrap interval and the number of docs. If two versions' intervals overlap heavily, the difference could be noise.
 - **Head-to-head** judge results: how often one version was ranked above another when the judge saw both.
+
+## Recheck invented facts
+
+If you change a project's invented-fact patterns, rerun them on the docs from earlier runs so every run is scored the same way:
+
+```sh
+python bench/recheck.py v5-vs-v4 useful-v5
+```
+
+This rewrites each doc's invented-fact results and rebuilds the report. It needs the raw `runs/` folder, so it only works on runs you have locally.
+
+Patterns skip lines that warn against the wrong usage, such as `pantry list --file x.json  # fails`, so a doc isn't penalised for pointing out a trap.
 
 ## Test the harness
 

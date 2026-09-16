@@ -29,6 +29,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("runs", nargs="+", help="Results folder names under bench/results/.")
     parser.add_argument("--alias", action="append", default=[], metavar="RUN:CONDITION=NAME",
                         help="Rename a condition in one run, e.g. v2-vs-v1:prompt=prompt-v2. Repeatable.")
+    parser.add_argument("--models", help="Only include docs written by these writer models, e.g. haiku or sonnet.")
     parser.add_argument("--out", help="Write the comparison to this Markdown file as well as printing it.")
     return parser.parse_args()
 
@@ -63,6 +64,7 @@ def main() -> None:
     args = parse_args()
     aliases = parse_aliases(args.alias)
     known_versions = baseline_names()
+    models = set(args.models.split(",")) if args.models else None
 
     # Reader results: one list of per-job pass/fail values per doc.
     reader = defaultdict(list)          # (task, version) -> [[1.0, 0.0, ...], ...]
@@ -84,6 +86,8 @@ def main() -> None:
             return known_versions.get(fingerprints.get(condition), condition)
 
         for row in data["runs"]:
+            if models and row["model"] not in models:
+                continue
             result = row.get("reader")
             if not result:
                 continue
@@ -98,6 +102,8 @@ def main() -> None:
                 values = [0.0] * result.get("total", 1)
             reader[(row["key"], version)].append(values)
         for verdict in data["verdicts"]:
+            if models and verdict["model"] not in models:
+                continue
             if not verdict.get("valid"):
                 continue
             ranking = [name(c) for c in verdict["ranking"]]
@@ -112,7 +118,7 @@ def main() -> None:
     lines = [
         "# Pooled comparison",
         "",
-        f"Runs pooled: {', '.join(args.runs)}.",
+        f"Runs pooled: {', '.join(args.runs)}." + (f" Writer models: {args.models}." if args.models else ""),
         "",
         "## Reader success",
         "",
